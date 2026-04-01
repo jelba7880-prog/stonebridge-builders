@@ -26,18 +26,18 @@ a{text-decoration:none;color:inherit;}
 button{font-family:var(--sans);}
 
 /* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:14px var(--px);background:rgba(255,255,255,.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--border);}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:14px var(--px);background:var(--navy);}
 .nav-logo{font-family:var(--serif);font-size:clamp(1rem,2vw,1.3rem);font-weight:700;color:var(--navy);z-index:110;position:relative;}
 .nav-links{display:flex;gap:clamp(18px,2.5vw,36px);list-style:none;}
-.nav-links a{font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--body);transition:color .25s;border-bottom:1px solid transparent;padding-bottom:2px;}
-.nav-links a:hover,.nav-links a.active{color:var(--navy);border-color:var(--navy);}
+.nav-links a{font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8);transition:color .25s;border-bottom:1px solid transparent;padding-bottom:2px;}
+.nav-links a:hover,.nav-links a.active{color:#fff;border-color:rgba(255,255,255,.5);}
 .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:34px;height:34px;background:none;border:none;cursor:pointer;z-index:110;position:relative;padding:2px;}
-.hamburger span{display:block;height:2px;border-radius:2px;background:var(--navy);transition:transform .35s,opacity .3s;transform-origin:center;}
+.hamburger span{display:block;height:2px;border-radius:2px;background:#fff;transition:transform .35s,opacity .3s;transform-origin:center;}
 .hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
 .hamburger[aria-expanded="true"] span:nth-child(2){opacity:0;}
 .hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 .nav-drawer{display:none;position:fixed;inset:0;z-index:90;background:#fff;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;pointer-events:none;transition:opacity .3s;}
-.nav-drawer[aria-hidden="false"]{opacity:1;pointer-events:all;}
+.nav-drawer.is-open{display:flex;opacity:1;pointer-events:all;}
 .nav-drawer a{font-family:var(--serif);font-size:clamp(1.8rem,7vw,2.6rem);font-weight:700;color:var(--navy);letter-spacing:.02em;transition:color .25s;}
 .nav-drawer a:hover{color:var(--amber);}
 
@@ -130,7 +130,6 @@ footer{background:var(--navy-dark);padding:clamp(40px,6vw,60px) var(--px) clamp(
 @media(max-width:900px){
   .nav-links{display:none;}
   .hamburger{display:flex;}
-  .nav-drawer{display:flex;}
   .service-section{grid-template-columns:1fr;gap:32px;}
   .service-section.img-right .service-text,.service-section.img-right .service-img-wrap{order:unset;}
   .other-grid{grid-template-columns:repeat(3,1fr);}
@@ -153,7 +152,7 @@ footer{background:var(--navy-dark);padding:clamp(40px,6vw,60px) var(--px) clamp(
 <!-- ── NAV ── -->
 <nav id="mainNav">
   <a href="./index.html" class="nav-logo">
-    <img src="./logo-dark.svg" alt="Stonebridge Builders" height="38">
+    <img src="./logo-white.svg" alt="Stonebridge Builders" height="38">
   </a>
   <ul class="nav-links" role="list">
     <li><a href="./services.html" class="active">Services</a></li>
@@ -371,8 +370,8 @@ footer{background:var(--navy-dark);padding:clamp(40px,6vw,60px) var(--px) clamp(
 const ham = document.getElementById('hamburger');
 const drawer = document.getElementById('mobileMenu');
 const links = drawer.querySelectorAll('.drawer-link');
-function openD(){ham.setAttribute('aria-expanded','true');drawer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';links[0].focus();}
-function closeD(){ham.setAttribute('aria-expanded','false');drawer.setAttribute('aria-hidden','true');document.body.style.overflow='';ham.focus();}
+function openD(){ham.setAttribute('aria-expanded','true');drawer.setAttribute('aria-hidden','false');drawer.classList.add('is-open');document.body.style.overflow='hidden';links[0].focus();}
+function closeD(){ham.setAttribute('aria-expanded','false');drawer.setAttribute('aria-hidden','true');drawer.classList.remove('is-open');document.body.style.overflow='';ham.focus();}
 ham.addEventListener('click',()=>ham.getAttribute('aria-expanded')==='false'?openD():closeD());
 links.forEach(l=>l.addEventListener('click',closeD));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ham.getAttribute('aria-expanded')==='true')closeD();});

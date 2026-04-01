@@ -68,14 +68,13 @@ nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 22px var(--px);
+  background: var(--navy);
   transition: background .35s, padding .35s, box-shadow .35s;
 }
 nav.scrolled {
-  background: rgba(255,255,255,.97);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: var(--navy);
   padding: 13px var(--px);
-  box-shadow: 0 1px 0 var(--border);
+  box-shadow: 0 1px 0 rgba(255,255,255,.1);
 }
 .nav-logo {
   font-family: var(--serif); font-size: clamp(1rem, 2vw, 1.3rem);
@@ -83,11 +82,11 @@ nav.scrolled {
   z-index: 110; position: relative; transition: color .3s;
   display: flex; align-items: center; gap: 10px;
 }
-nav.scrolled .nav-logo { color: var(--navy); }
+nav.scrolled .nav-logo { color: #fff; }
 .logo-white { display: block; }
 .logo-dark  { display: none; }
-nav.scrolled .logo-white { display: none; }
-nav.scrolled .logo-dark  { display: block; }
+nav.scrolled .logo-white { display: block; }
+nav.scrolled .logo-dark  { display: none; }
 
 .nav-links { display: flex; gap: clamp(18px, 2.5vw, 36px); list-style: none; }
 .nav-links a {
@@ -96,8 +95,6 @@ nav.scrolled .logo-dark  { display: block; }
   transition: color .25s; border-bottom: 1px solid transparent; padding-bottom: 2px;
 }
 .nav-links a:hover { color: #fff; border-color: rgba(255,255,255,.5); }
-nav.scrolled .nav-links a { color: var(--body); }
-nav.scrolled .nav-links a:hover { color: var(--navy); border-color: var(--navy); }
 
 /* ─────────────────────────────────────
    HAMBURGER
@@ -112,10 +109,9 @@ nav.scrolled .nav-links a:hover { color: var(--navy); border-color: var(--navy);
   transition: background .3s, transform .35s, opacity .3s;
   transform-origin: center;
 }
-nav.scrolled .hamburger span { background: var(--navy); }
-.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--navy) !important; }
+.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: #fff !important; }
 .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--navy) !important; }
+.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: #fff !important; }
 
 /* ─────────────────────────────────────
    MOBILE DRAWER
@@ -126,7 +122,7 @@ nav.scrolled .hamburger span { background: var(--navy); }
   align-items: center; justify-content: center; gap: 28px;
   opacity: 0; pointer-events: none; transition: opacity .3s;
 }
-.nav-drawer[aria-hidden="false"] { opacity: 1; pointer-events: all; }
+.nav-drawer.is-open { display: flex; opacity: 1; pointer-events: all; }
 .nav-drawer a {
   font-family: var(--serif); font-size: clamp(1.8rem, 7vw, 2.6rem);
   font-weight: 700; color: var(--navy); letter-spacing: .02em; transition: color .25s;
@@ -385,7 +381,6 @@ footer {
 @media (max-width: 900px) {
   .nav-links { display: none; }
   .hamburger { display: flex; }
-  .nav-drawer { display: flex; }
   .hero-scroll { display: none; }
   .brand { grid-template-columns: 1fr; gap: 44px; }
   .services-grid { grid-template-columns: 1fr; }
@@ -425,7 +420,6 @@ footer {
 <nav id="mainNav">
   <a href="./index.html" class="nav-logo" aria-label="Stonebridge Builders — Home">
     <img src="./logo-white.svg" alt="Stonebridge Builders" class="logo-white" height="38">
-    <img src="./logo-dark.svg"  alt="Stonebridge Builders" class="logo-dark"  height="38">
   </a>
   <ul class="nav-links" role="list">
     <li><a href="./services.html">Services</a></li>
@@ -808,12 +802,14 @@ var drawerLinks = drawer.querySelectorAll('.drawer-link');
 function openDrawer() {
   ham.setAttribute('aria-expanded', 'true');
   drawer.setAttribute('aria-hidden', 'false');
+  drawer.classList.add('is-open');
   document.body.style.overflow = 'hidden';
   if (drawerLinks[0]) drawerLinks[0].focus();
 }
 function closeDrawer() {
   ham.setAttribute('aria-expanded', 'false');
   drawer.setAttribute('aria-hidden', 'true');
+  drawer.classList.remove('is-open');
   document.body.style.overflow = '';
   ham.focus();
 }

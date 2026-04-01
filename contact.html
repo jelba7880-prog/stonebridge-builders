@@ -50,26 +50,24 @@ nav {
   position: sticky; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px var(--px);
-  background: rgba(255,255,255,.97);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 1px 0 var(--border);
+  background: var(--navy);
 }
 .nav-logo { z-index: 110; position: relative; display: flex; align-items: center; }
 .nav-logo img { height: 38px; width: auto; display: block; }
 .nav-links { display: flex; gap: clamp(18px, 2.5vw, 36px); list-style: none; }
 .nav-links a {
   font-size: .75rem; font-weight: 500; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--body);
+  text-transform: uppercase; color: rgba(255,255,255,.8);
   transition: color .25s; border-bottom: 1px solid transparent; padding-bottom: 2px;
 }
-.nav-links a:hover, .nav-links a.active { color: var(--navy); border-color: var(--navy); }
+.nav-links a:hover, .nav-links a.active { color: #fff; border-color: rgba(255,255,255,.5); }
 .hamburger {
   display: none; flex-direction: column; justify-content: center; gap: 5px;
   width: 34px; height: 34px; background: none; border: none; cursor: pointer;
   z-index: 110; padding: 2px;
 }
 .hamburger span {
-  display: block; height: 2px; border-radius: 2px; background: var(--navy);
+  display: block; height: 2px; border-radius: 2px; background: #fff;
   transition: transform .35s, opacity .3s; transform-origin: center;
 }
 .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -81,7 +79,7 @@ nav {
   align-items: center; justify-content: center; gap: 28px;
   opacity: 0; pointer-events: none; transition: opacity .3s;
 }
-.nav-drawer[aria-hidden="false"] { opacity: 1; pointer-events: all; }
+.nav-drawer.is-open { display: flex; opacity: 1; pointer-events: all; }
 .nav-drawer a {
   font-family: var(--serif); font-size: clamp(1.8rem, 7vw, 2.6rem);
   font-weight: 700; color: var(--navy); letter-spacing: .02em; transition: color .25s;
@@ -213,7 +211,6 @@ footer {
 @media (max-width: 900px) {
   .nav-links { display: none; }
   .hamburger { display: flex; }
-  .nav-drawer { display: flex; }
   .contact-wrap { grid-template-columns: 1fr; }
   .contact-sidebar { padding: clamp(40px, 8vw, 64px) var(--px); }
   .contact-form-side { padding: clamp(40px, 8vw, 64px) var(--px); }
@@ -234,7 +231,7 @@ footer {
 <!-- ══ NAV ══ -->
 <nav id="mainNav">
   <a href="./index.html" class="nav-logo">
-    <img src="./logo-dark.svg" alt="Stonebridge Builders">
+    <img src="./logo-white.svg" alt="Stonebridge Builders">
   </a>
   <ul class="nav-links" role="list">
     <li><a href="./services.html">Services</a></li>
@@ -418,8 +415,8 @@ document.body.classList.add('js-ready');
 var ham = document.getElementById('hamburger');
 var drawer = document.getElementById('mobileMenu');
 var dlinks = drawer.querySelectorAll('.drawer-link');
-function openD() { ham.setAttribute('aria-expanded','true'); drawer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; if(dlinks[0]) dlinks[0].focus(); }
-function closeD() { ham.setAttribute('aria-expanded','false'); drawer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; ham.focus(); }
+function openD() { ham.setAttribute('aria-expanded','true'); drawer.setAttribute('aria-hidden','false'); drawer.classList.add('is-open'); document.body.style.overflow='hidden'; if(dlinks[0]) dlinks[0].focus(); }
+function closeD() { ham.setAttribute('aria-expanded','false'); drawer.setAttribute('aria-hidden','true'); drawer.classList.remove('is-open'); document.body.style.overflow=''; ham.focus(); }
 ham.addEventListener('click', function() { ham.getAttribute('aria-expanded')==='false' ? openD() : closeD(); });
 dlinks.forEach(function(l) { l.addEventListener('click', closeD); });
 document.addEventListener('keydown', function(e) { if(e.key==='Escape' && ham.getAttribute('aria-expanded')==='true') closeD(); });
