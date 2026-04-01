@@ -1,0 +1,15 @@
+<svg width="260" height="68" viewBox="0 0 260 68" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(2,5)">
+    <path fill="#1D3557" fill-rule="evenodd" d="M 0,46 L 0,27 C 0,7 42,7 42,27 L 42,46 Z M 10,46 L 10,28 C 10,18 32,18 32,28 L 32,46 Z"/>
+    <polygon points="21,11 26,16 21,21 16,16" fill="#C49128"/>
+    <line x1="0.5" y1="34" x2="9.5" y2="34" stroke="#F6F5F2" stroke-width="1" opacity="0.6"/>
+    <line x1="0.5" y1="40" x2="9.5" y2="40" stroke="#F6F5F2" stroke-width="1" opacity="0.6"/>
+    <line x1="32.5" y1="34" x2="41.5" y2="34" stroke="#F6F5F2" stroke-width="1" opacity="0.6"/>
+    <line x1="32.5" y1="40" x2="41.5" y2="40" stroke="#F6F5F2" stroke-width="1" opacity="0.6"/>
+    <line x1="-2" y1="46" x2="44" y2="46" stroke="#1D3557" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <line x1="57" y1="10" x2="57" y2="62" stroke="#DEDBD4" stroke-width="1"/>
+  <text x="68" y="21" font-family="'DM Sans',system-ui,sans-serif" font-size="6" fill="#C49128" letter-spacing="2.2" font-weight="500">EST. 2009</text>
+  <text x="68" y="44" font-family="'Playfair Display',Georgia,serif" font-size="20" fill="#1D3557" font-weight="700" letter-spacing="0.5">STONEBRIDGE</text>
+  <text x="70" y="57" font-family="'DM Sans',system-ui,sans-serif" font-size="7" fill="#646464" font-weight="500" letter-spacing="4">BUILDERS</text>
+</svg>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Stonebridge Builders</title>
+<meta name="description" content="Get in touch with Stonebridge Builders. We serve Pennsylvania, North Carolina, and Illinois. Request a free estimate today.">
+<link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #1D3557;
+  --navy-dark: #142640;
+  --navy-lt:   #2A4A6A;
+  --amber:     #C49128;
+  --amber-h:   #A87A1E;
+  --white:     #FFFFFF;
+  --off-white: #F6F5F2;
+  --cream:     #EFECE6;
+  --border:    #DEDBD4;
+  --text:      #111111;
+  --body:      #383838;
+  --mid:       #646464;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'DM Sans', system-ui, -apple-system, sans-serif;
+  --px: clamp(20px, 5.5vw, 72px);
+  --py: clamp(60px, 9vw, 112px);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { background: var(--white); color: var(--text); font-family: var(--sans); font-weight: 400; overflow-x: hidden; line-height: 1.65; }
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+button { font-family: var(--sans); }
+
+/* ── REVEAL ── */
+body.js-ready .reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity .75s cubic-bezier(.22,1,.36,1), transform .75s cubic-bezier(.22,1,.36,1);
+}
+body.js-ready .reveal.visible { opacity: 1; transform: none; }
+body.js-ready .d1 { transition-delay: .1s; }
+body.js-ready .d2 { transition-delay: .2s; }
+body.js-ready .d3 { transition-delay: .3s; }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px var(--px);
+  background: rgba(255,255,255,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 var(--border);
+}
+.nav-logo { z-index: 110; position: relative; display: flex; align-items: center; }
+.nav-logo img { height: 38px; width: auto; display: block; }
+.nav-links { display: flex; gap: clamp(18px, 2.5vw, 36px); list-style: none; }
+.nav-links a {
+  font-size: .75rem; font-weight: 500; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--body);
+  transition: color .25s; border-bottom: 1px solid transparent; padding-bottom: 2px;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--navy); border-color: var(--navy); }
+.hamburger {
+  display: none; flex-direction: column; justify-content: center; gap: 5px;
+  width: 34px; height: 34px; background: none; border: none; cursor: pointer;
+  z-index: 110; padding: 2px;
+}
+.hamburger span {
+  display: block; height: 2px; border-radius: 2px; background: var(--navy);
+  transition: transform .35s, opacity .3s; transform-origin: center;
+}
+.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-drawer {
+  display: none; position: fixed; inset: 0; z-index: 90;
+  background: #fff; flex-direction: column;
+  align-items: center; justify-content: center; gap: 28px;
+  opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.nav-drawer[aria-hidden="false"] { opacity: 1; pointer-events: all; }
+.nav-drawer a {
+  font-family: var(--serif); font-size: clamp(1.8rem, 7vw, 2.6rem);
+  font-weight: 700; color: var(--navy); letter-spacing: .02em; transition: color .25s;
+}
+.nav-drawer a:hover { color: var(--amber); }
+
+/* ── PAGE HERO ── */
+.page-hero {
+  background: var(--navy);
+  padding: clamp(64px, 10vw, 108px) var(--px) clamp(52px, 8vw, 88px);
+  position: relative; overflow: hidden;
+}
+.page-hero::after {
+  content: ''; position: absolute; inset: 0;
+  background: url('https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1400/v1774834004/gs_house-1-gallery-2_up7mtg.jpg') center/cover;
+  opacity: .1;
+}
+.page-hero-content { position: relative; z-index: 1; max-width: 640px; }
+.eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.eyebrow-line { width: 24px; height: 2px; background: var(--amber); flex-shrink: 0; }
+.eyebrow-text { font-size: .62rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--amber); }
+.page-hero h1 {
+  font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 700; line-height: 1.12; color: #fff;
+}
+.page-hero p {
+  font-size: clamp(.88rem, 1.5vw, 1rem); color: rgba(255,255,255,.68);
+  max-width: 480px; line-height: 1.85; margin-top: 18px;
+}
+
+/* ── CONTACT SPLIT ── */
+.contact-wrap {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; min-height: 600px;
+}
+.contact-sidebar {
+  background: var(--navy); padding: clamp(48px, 7vw, 80px) clamp(32px, 5vw, 64px);
+  display: flex; flex-direction: column; justify-content: flex-start;
+}
+.contact-sidebar-logo { margin-bottom: 44px; }
+.contact-sidebar-logo img { height: 44px; width: auto; opacity: .9; }
+.contact-sidebar h2 {
+  font-family: var(--serif); font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 700; color: #fff; line-height: 1.25; margin-bottom: 12px;
+}
+.contact-sidebar > p {
+  font-size: clamp(.85rem, 1.4vw, .93rem); line-height: 1.9;
+  color: rgba(255,255,255,.65); margin-bottom: 44px;
+}
+.contact-details { display: flex; flex-direction: column; gap: 28px; }
+.c-detail {}
+.c-label { font-size: .58rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--amber); margin-bottom: 6px; }
+.c-val { font-family: var(--serif); font-size: clamp(.95rem, 1.6vw, 1.1rem); font-weight: 600; color: #fff; line-height: 1.4; }
+.c-val a { color: #fff; transition: color .25s; }
+.c-val a:hover { color: var(--amber); }
+.contact-divider { height: 1px; background: rgba(255,255,255,.1); margin: 36px 0; }
+.states-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
+.state-pill {
+  font-size: .65rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.2); padding: 6px 14px; color: rgba(255,255,255,.7);
+}
+
+/* ── FORM SIDE ── */
+.contact-form-side {
+  background: var(--cream); padding: clamp(48px, 7vw, 80px) clamp(32px, 5vw, 64px);
+}
+.contact-form-side h3 {
+  font-family: var(--serif); font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+  font-weight: 700; color: var(--navy); margin-bottom: 8px;
+}
+.contact-form-side .form-intro {
+  font-size: .88rem; color: var(--body); line-height: 1.8; margin-bottom: 36px;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-g { margin-bottom: 24px; }
+.form-g label {
+  display: block; font-size: .6rem; font-weight: 600; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--mid); margin-bottom: 9px;
+}
+.form-g input,
+.form-g textarea,
+.form-g select {
+  width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--border);
+  padding: 9px 0; font-family: var(--sans); font-size: .9rem;
+  color: var(--text); outline: none; -webkit-appearance: none; border-radius: 0;
+  transition: border-color .25s;
+}
+.form-g input:focus,
+.form-g textarea:focus,
+.form-g select:focus { border-color: var(--navy); }
+.form-g textarea { resize: none; height: 100px; }
+.form-g.full { grid-column: 1 / -1; }
+.btn-submit {
+  background: var(--navy); color: #fff; font-family: var(--sans);
+  font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  border: none; padding: 15px 44px; cursor: pointer;
+  transition: background .25s; margin-top: 8px; width: 100%;
+}
+.btn-submit:hover { background: var(--navy-lt); }
+
+/* ── BOTTOM BAND ── */
+.contact-bottom-band {
+  background: var(--off-white); padding: clamp(48px, 6vw, 72px) var(--px);
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 4vw, 48px);
+}
+.cbf-item {}
+.cbf-icon {
+  width: 40px; height: 40px; background: var(--white);
+  border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+}
+.cbf-icon svg { width: 20px; height: 20px; color: var(--amber); }
+.cbf-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.cbf-text { font-size: .85rem; line-height: 1.85; color: var(--body); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--navy-dark);
+  padding: clamp(40px, 6vw, 60px) var(--px) clamp(24px, 4vw, 36px);
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 32px;
+}
+.footer-logo-img { height: 36px; width: auto; display: block; margin-bottom: 14px; opacity: .9; }
+.footer-tagline { font-size: .72rem; font-weight: 300; color: rgba(255,255,255,.4); line-height: 1.8; }
+.footer-nav { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center; }
+.footer-nav a { font-size: .65rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.45); transition: color .25s; }
+.footer-nav a:hover { color: #fff; }
+.footer-copy { font-size: .62rem; color: rgba(255,255,255,.3); align-self: flex-end; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .nav-drawer { display: flex; }
+  .contact-wrap { grid-template-columns: 1fr; }
+  .contact-sidebar { padding: clamp(40px, 8vw, 64px) var(--px); }
+  .contact-form-side { padding: clamp(40px, 8vw, 64px) var(--px); }
+  .contact-bottom-band { grid-template-columns: 1fr; gap: 32px; }
+  .footer-copy { align-self: auto; }
+}
+@media (max-width: 580px) {
+  nav { padding: 14px 20px; }
+  .page-hero, .contact-bottom-band { padding-left: 20px; padding-right: 20px; }
+  .contact-sidebar, .contact-form-side { padding-left: 20px; padding-right: 20px; }
+  .form-row { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 24px; padding-left: 20px; padding-right: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="mainNav">
+  <a href="./index.html" class="nav-logo">
+    <img src="./logo-dark.svg" alt="Stonebridge Builders">
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="./services.html">Services</a></li>
+    <li><a href="./projects.html">Projects</a></li>
+    <li><a href="./contact.html" class="active">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger"
+    aria-expanded="false" aria-controls="mobileMenu" aria-label="Open navigation menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-drawer" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
+  <a href="./services.html" class="drawer-link">Services</a>
+  <a href="./projects.html" class="drawer-link">Projects</a>
+  <a href="./contact.html" class="drawer-link">Contact</a>
+</div>
+
+<!-- ══ PAGE HERO ══ -->
+<div class="page-hero">
+  <div class="page-hero-content">
+    <div class="eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">Get In Touch</span></div>
+    <h1>Let's Build<br>Something Together</h1>
+    <p>Tell us about your project and we'll follow up within one business day. We serve Pennsylvania, North Carolina, and Illinois.</p>
+  </div>
+</div>
+
+<!-- ══ CONTACT SPLIT ══ -->
+<div class="contact-wrap">
+
+  <!-- LEFT: sidebar with details -->
+  <div class="contact-sidebar">
+    <div class="contact-sidebar-logo reveal">
+      <img src="./logo-white.svg" alt="Stonebridge Builders">
+    </div>
+    <h2 class="reveal d1">We're ready<br>to get to work.</h2>
+    <p class="reveal d1">Whether you're planning a full build, a renovation, or need reliable repairs, Stonebridge has the experience and the team to deliver.</p>
+
+    <div class="contact-details reveal d2">
+      <div class="c-detail">
+        <div class="c-label">Phone</div>
+        <div class="c-val"><a href="tel:+16175550182">(617) 555-0182</a></div>
+      </div>
+      <div class="c-detail">
+        <div class="c-label">Email</div>
+        <div class="c-val"><a href="mailto:hello&#64;stonebridgebuilders&#46;com">hello&#64;stonebridgebuilders&#46;com</a></div>
+      </div>
+      <div class="c-detail">
+        <div class="c-label">Service Area</div>
+        <div class="states-row">
+          <span class="state-pill">Pennsylvania</span>
+          <span class="state-pill">North Carolina</span>
+          <span class="state-pill">Illinois</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-divider reveal d3"></div>
+
+    <div class="reveal d3">
+      <div class="c-label">Business Hours</div>
+      <div class="c-val" style="font-size:.9rem;font-weight:400;color:rgba(255,255,255,.7);line-height:1.9;margin-top:6px;">
+        Monday – Friday &nbsp;&nbsp;8:00am – 5:00pm<br>
+        Saturday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;By appointment<br>
+        Sunday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Closed
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: form -->
+  <div class="contact-form-side">
+    <h3 class="reveal">Send Us a Message</h3>
+    <p class="form-intro reveal d1">Fill out the form below and a member of our team will be in touch within one business day.</p>
+
+    <div class="reveal d1">
+      <div class="form-row">
+        <div class="form-g">
+          <label for="fname">First Name</label>
+          <input type="text" id="fname" name="first_name" placeholder="John" autocomplete="given-name">
+        </div>
+        <div class="form-g">
+          <label for="flname">Last Name</label>
+          <input type="text" id="flname" name="last_name" placeholder="Smith" autocomplete="family-name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-g">
+          <label for="femail">Email Address</label>
+          <input type="email" id="femail" name="email" placeholder="you@email.com" autocomplete="email">
+        </div>
+        <div class="form-g">
+          <label for="fphone">Phone Number</label>
+          <input type="tel" id="fphone" name="phone" placeholder="(xxx) xxx-xxxx" autocomplete="tel">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-g">
+          <label for="fstate">State</label>
+          <select id="fstate" name="state">
+            <option value="" disabled selected>Select your state</option>
+            <option>Pennsylvania</option>
+            <option>North Carolina</option>
+            <option>Illinois</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-g">
+          <label for="ftype">Project Type</label>
+          <select id="ftype" name="project_type">
+            <option value="" disabled selected>Select a type</option>
+            <option>New Construction</option>
+            <option>Renovation / Remodel</option>
+            <option>General Contracting</option>
+            <option>Repairs</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-g">
+        <label for="fbudget">Estimated Budget</label>
+        <select id="fbudget" name="budget">
+          <option value="" disabled selected>Select a range</option>
+          <option>Under $50,000</option>
+          <option>$50,000 – $150,000</option>
+          <option>$150,000 – $500,000</option>
+          <option>$500,000 – $1,000,000</option>
+          <option>Over $1,000,000</option>
+          <option>Prefer not to say</option>
+        </select>
+      </div>
+      <div class="form-g">
+        <label for="fmsg">Tell Us About Your Project</label>
+        <textarea id="fmsg" name="message" placeholder="Describe your project, location, timeline, and any specific questions you have..."></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Send Inquiry</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ BOTTOM TRUST BAND ══ -->
+<div class="contact-bottom-band">
+  <div class="cbf-item reveal">
+    <div class="cbf-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.12 1.2 2 2 0 012.1 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+    </div>
+    <div class="cbf-title">Quick Response</div>
+    <div class="cbf-text">We respond to every inquiry within one business day. Your project timeline matters to us.</div>
+  </div>
+  <div class="cbf-item reveal d1">
+    <div class="cbf-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <div class="cbf-title">Licensed &amp; Insured</div>
+    <div class="cbf-text">Stonebridge Builders is fully licensed and insured across all three states we operate in.</div>
+  </div>
+  <div class="cbf-item reveal d2">
+    <div class="cbf-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    </div>
+    <div class="cbf-title">15+ Years of Experience</div>
+    <div class="cbf-text">Since 2009, we've completed 87+ projects and built a reputation for quality that speaks for itself.</div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div>
+    <img src="./logo-white.svg" alt="Stonebridge Builders" class="footer-logo-img">
+    <p class="footer-tagline">Professional general contractor.<br>Pennsylvania · North Carolina · Illinois<br>Est. 2009 · Licensed &amp; Insured.</p>
+  </div>
+  <ul class="footer-nav" role="list">
+    <li><a href="./services.html">Services</a></li>
+    <li><a href="./projects.html">Projects</a></li>
+    <li><a href="./contact.html">Contact</a></li>
+  </ul>
+  <p class="footer-copy">&copy; 2025 Stonebridge Builders LLC</p>
+</footer>
+
+<script>
+document.body.classList.add('js-ready');
+var ham = document.getElementById('hamburger');
+var drawer = document.getElementById('mobileMenu');
+var dlinks = drawer.querySelectorAll('.drawer-link');
+function openD() { ham.setAttribute('aria-expanded','true'); drawer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; if(dlinks[0]) dlinks[0].focus(); }
+function closeD() { ham.setAttribute('aria-expanded','false'); drawer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; ham.focus(); }
+ham.addEventListener('click', function() { ham.getAttribute('aria-expanded')==='false' ? openD() : closeD(); });
+dlinks.forEach(function(l) { l.addEventListener('click', closeD); });
+document.addEventListener('keydown', function(e) { if(e.key==='Escape' && ham.getAttribute('aria-expanded')==='true') closeD(); });
+if ('IntersectionObserver' in window) {
+  var ro = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if(e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(function(el) { ro.observe(el); });
+}
+</script>
+</body>
+</html>

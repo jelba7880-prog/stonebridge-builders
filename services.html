@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — Stonebridge Builders</title>
+<link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1D3557;--navy-dark:#142640;--navy-light:#2A4A6A;
+  --amber:#C49128;--amber-h:#A87A1E;
+  --white:#FFFFFF;--off-white:#F6F5F2;--cream:#EFECE6;
+  --border:#DEDBD4;--text:#111111;--body:#383838;--mid:#646464;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --px:clamp(20px,5.5vw,72px);--py:clamp(60px,9vw,112px);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{background:var(--white);color:var(--text);font-family:var(--sans);font-weight:400;overflow-x:hidden;line-height:1.65;}
+img{display:block;max-width:100%;}
+a{text-decoration:none;color:inherit;}
+button{font-family:var(--sans);}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:14px var(--px);background:rgba(255,255,255,.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--border);}
+.nav-logo{font-family:var(--serif);font-size:clamp(1rem,2vw,1.3rem);font-weight:700;color:var(--navy);z-index:110;position:relative;}
+.nav-links{display:flex;gap:clamp(18px,2.5vw,36px);list-style:none;}
+.nav-links a{font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--body);transition:color .25s;border-bottom:1px solid transparent;padding-bottom:2px;}
+.nav-links a:hover,.nav-links a.active{color:var(--navy);border-color:var(--navy);}
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:34px;height:34px;background:none;border:none;cursor:pointer;z-index:110;position:relative;padding:2px;}
+.hamburger span{display:block;height:2px;border-radius:2px;background:var(--navy);transition:transform .35s,opacity .3s;transform-origin:center;}
+.hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger[aria-expanded="true"] span:nth-child(2){opacity:0;}
+.hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.nav-drawer{display:none;position:fixed;inset:0;z-index:90;background:#fff;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;pointer-events:none;transition:opacity .3s;}
+.nav-drawer[aria-hidden="false"]{opacity:1;pointer-events:all;}
+.nav-drawer a{font-family:var(--serif);font-size:clamp(1.8rem,7vw,2.6rem);font-weight:700;color:var(--navy);letter-spacing:.02em;transition:color .25s;}
+.nav-drawer a:hover{color:var(--amber);}
+
+/* ── PAGE HERO ── */
+.page-hero{
+  background:var(--navy);padding:clamp(100px,14vw,140px) var(--px) clamp(64px,9vw,100px);
+  position:relative;overflow:hidden;
+}
+.page-hero::after{
+  content:'';position:absolute;inset:0;
+  background:url('https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1400/v1774834004/gs_house-1-gallery-2_up7mtg.jpg') center/cover;
+  opacity:.12;
+}
+.page-hero-content{position:relative;z-index:1;}
+.page-hero-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.page-hero-eyebrow .line{width:24px;height:2px;background:var(--amber);}
+.page-hero-eyebrow span{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);}
+.page-hero h1{font-family:var(--serif);font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;line-height:1.15;color:#fff;max-width:680px;}
+.page-hero p{font-size:clamp(.88rem,1.5vw,1rem);color:rgba(255,255,255,.7);max-width:520px;line-height:1.8;margin-top:18px;}
+
+/* ── MAIN SERVICES ── */
+.eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.eyebrow-line{width:24px;height:2px;background:var(--amber);}
+.eyebrow-text{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);}
+.sec-title{font-family:var(--serif);font-size:clamp(1.7rem,3.2vw,2.6rem);font-weight:700;line-height:1.2;letter-spacing:-.01em;}
+
+.service-section{
+  padding:clamp(64px,9vw,100px) var(--px);
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(40px,7vw,88px);align-items:center;
+}
+.service-section:nth-child(even){background:var(--off-white);}
+.service-section:nth-child(odd){background:var(--white);}
+.service-section.img-right .service-text{order:2;}
+.service-section.img-right .service-img-wrap{order:1;}
+.service-icon-wrap{width:52px;height:52px;background:var(--cream);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
+.service-icon-wrap svg{width:28px;height:28px;color:var(--amber);}
+.service-section h2{font-family:var(--serif);font-size:clamp(1.5rem,2.8vw,2.1rem);font-weight:700;color:var(--navy);margin-bottom:16px;}
+.service-section p{font-size:clamp(.85rem,1.4vw,.93rem);line-height:1.95;color:var(--body);margin-bottom:14px;}
+.service-section p:last-of-type{margin-bottom:0;}
+.service-img-wrap{position:relative;}
+.service-img-wrap img{width:100%;height:clamp(260px,40vw,460px);object-fit:cover;}
+.service-img-tag{position:absolute;bottom:0;left:0;background:var(--navy);color:#fff;font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:11px 18px;}
+
+/* ── OTHER SERVICES ── */
+.other-services{padding:var(--py) var(--px);background:var(--navy);}
+.other-services h2{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:#fff;margin-bottom:14px;margin-top:8px;}
+.other-services .sub{font-size:clamp(.85rem,1.4vw,.93rem);color:rgba(255,255,255,.6);max-width:520px;line-height:1.8;margin-bottom:48px;}
+.other-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:0;
+  border:1px solid rgba(255,255,255,.1);
+}
+.other-item{
+  display:flex;align-items:center;gap:12px;
+  padding:20px 22px;
+  border-right:1px solid rgba(255,255,255,.1);
+  border-bottom:1px solid rgba(255,255,255,.1);
+  transition:background .25s;
+}
+.other-item:hover{background:rgba(255,255,255,.05);}
+.other-item svg{width:20px;height:20px;color:var(--amber);flex-shrink:0;}
+.other-item span{font-size:.82rem;font-weight:500;color:rgba(255,255,255,.8);letter-spacing:.02em;}
+
+/* ── CTA BAND ── */
+.cta-band{
+  background:var(--cream);padding:clamp(56px,8vw,88px) var(--px);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:28px;
+}
+.cta-band h2{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;color:var(--navy);line-height:1.25;}
+.btn-primary{display:inline-block;background:var(--amber);color:#fff;font-family:var(--sans);font-size:.74rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:15px 36px;transition:background .25s;white-space:nowrap;}
+.btn-primary:hover{background:var(--amber-h);}
+
+/* ── FOOTER ── */
+footer{background:var(--navy-dark);padding:clamp(40px,6vw,60px) var(--px) clamp(24px,4vw,36px);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:32px;}
+.footer-logo{font-family:var(--serif);font-size:1.25rem;font-weight:700;color:#fff;display:block;margin-bottom:10px;}
+.footer-tagline{font-size:.72rem;font-weight:300;color:rgba(255,255,255,.4);line-height:1.8;}
+.footer-nav{list-style:none;display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;}
+.footer-nav a{font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .25s;}
+.footer-nav a:hover{color:#fff;}
+.footer-copy{font-size:.62rem;color:rgba(255,255,255,.3);align-self:flex-end;}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
+.reveal.v{opacity:1;transform:none;}
+.d1{transition-delay:.12s}.d2{transition-delay:.24s}
+
+@media(max-width:900px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .nav-drawer{display:flex;}
+  .service-section{grid-template-columns:1fr;gap:32px;}
+  .service-section.img-right .service-text,.service-section.img-right .service-img-wrap{order:unset;}
+  .other-grid{grid-template-columns:repeat(3,1fr);}
+  .cta-band{flex-direction:column;gap:20px;}
+}
+@media(max-width:580px){
+  nav{padding:14px 20px;}
+  .page-hero,.other-services,.cta-band{padding-left:20px;padding-right:20px;}
+  .service-section{padding:52px 20px;}
+  .other-grid{grid-template-columns:repeat(2,1fr);}
+  footer{flex-direction:column;gap:24px;padding-left:20px;padding-right:20px;}
+}
+@media(max-width:380px){
+  .other-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="mainNav">
+  <a href="./index.html" class="nav-logo">
+    <img src="./logo-dark.svg" alt="Stonebridge Builders" height="38">
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="./services.html" class="active">Services</a></li>
+    <li><a href="./projects.html">Projects</a></li>
+    <li><a href="./contact.html">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open navigation menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-drawer" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu" aria-hidden="true">
+  <a href="./services.html" class="drawer-link">Services</a>
+  <a href="./projects.html" class="drawer-link">Projects</a>
+  <a href="./contact.html" class="drawer-link">Contact</a>
+</div>
+
+<!-- ── PAGE HERO ── -->
+<div class="page-hero">
+  <div class="page-hero-content">
+    <div class="page-hero-eyebrow"><div class="line"></div><span>What We Offer</span></div>
+    <h1>Professional Services Built on Experience</h1>
+    <p>From ground-up new construction to targeted repairs, Stonebridge brings expertise, integrity, and craftsmanship to every project we take on.</p>
+  </div>
+</div>
+
+<!-- ── SERVICE 1: DESIGN/BUILD ── -->
+<section class="service-section" id="design-build">
+  <div class="service-text reveal">
+    <div class="service-icon-wrap" aria-hidden="true">
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="6" y="6" width="36" height="36" rx="2"/>
+        <line x1="6" y1="14" x2="42" y2="14"/>
+        <line x1="16" y1="6" x2="16" y2="14"/>
+        <line x1="32" y1="6" x2="32" y2="14"/>
+        <path d="M14 26h4l4-8 4 14 4-8h4"/>
+      </svg>
+    </div>
+    <h2>Design / Build</h2>
+    <p>Our design/build process always starts by building a strong relationship with our clients. Using a general contractor such as Stonebridge for design/builds is a great way to streamline your project, reduce costs, and maintain a single point of accountability from concept through completion.</p>
+    <p>Rather than managing an architect, a designer, and a builder separately, our integrated approach means fewer miscommunications, faster timelines, and a smoother experience for you. We listen first, then design and build with your priorities in mind at every step.</p>
+    <p>Whether you're starting from a napkin sketch or an architect's blueprints, we work with you to develop a practical, beautiful plan and then execute it with precision and care.</p>
+  </div>
+  <div class="service-img-wrap reveal d1">
+    <img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_900/v1774834002/gs_house-1-gallery-1_dxdx7a.jpg"
+      alt="Design and Build services" loading="lazy" decoding="async">
+    <div class="service-img-tag">Design / Build</div>
+  </div>
+</section>
+
+<!-- ── SERVICE 2: RENOVATION ── -->
+<section class="service-section img-right" id="renovation">
+  <div class="service-img-wrap reveal">
+    <img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_900/v1774833796/gs_house-2-gallery-3_asuwzw.jpg"
+      alt="Renovation and Remodeling services" loading="lazy" decoding="async">
+    <div class="service-img-tag">Renovation &amp; Remodeling</div>
+  </div>
+  <div class="service-text reveal d1">
+    <div class="service-icon-wrap" aria-hidden="true">
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 38L20 26"/>
+        <path d="M20 26l3-3 3 3-3 3z"/>
+        <path d="M24 22l12-12a3 3 0 014 4L28 26"/>
+        <path d="M10 34l4 4"/>
+        <circle cx="13" cy="37" r="5"/>
+      </svg>
+    </div>
+    <h2>Renovation &amp; Remodeling</h2>
+    <p>At Stonebridge, we've seen a thing or two. Utilizing a mix of hard-earned construction wisdom, creativity, and determination, we help our clients transform their homes and spaces into something they're proud of.</p>
+    <p>Whether it's opening up a floor plan, updating an outdated kitchen, finishing a basement, or completely reimagining a space, we approach every renovation with the same standards we apply to new builds: quality materials, skilled tradespeople, and attention to every detail.</p>
+    <p>We work collaboratively with homeowners throughout the process, ensuring you're informed and comfortable at every stage—no surprises, no shortcuts.</p>
+  </div>
+</section>
+
+<!-- ── SERVICE 3: GENERAL CONTRACTOR ── -->
+<section class="service-section" id="general-contractor">
+  <div class="service-text reveal">
+    <div class="service-icon-wrap" aria-hidden="true">
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 42V22l18-14 18 14v20H6z"/>
+        <rect x="18" y="30" width="12" height="12"/>
+        <path d="M18 30v-6h12v6"/>
+        <line x1="6" y1="22" x2="24" y2="10"/>
+        <line x1="42" y1="22" x2="24" y2="10"/>
+      </svg>
+    </div>
+    <h2>General Contractor</h2>
+    <p>Stonebridge Construction LLC is a master of craft. We have built homes of every shape and size. Whether you're building a sleek modern ranch or a rustic three-story cabin, our team has the experience, the network of trusted subcontractors, and the project management discipline to deliver.</p>
+    <p>As your general contractor, we manage every aspect of your project—scheduling, subcontractors, material procurement, inspections, and quality control—so you don't have to. You get one point of contact, clear communication, and a team that treats your project like their own.</p>
+    <p>Stonebridge hires only the highest-quality subcontractors, which means, from end to end, our clients get the best of the best.</p>
+  </div>
+  <div class="service-img-wrap reveal d1">
+    <img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_900/v1774841986/182425391_3987721821277412_9080169092840881618_n_idvvyv.jpg"
+      alt="General Contractor services" loading="lazy" decoding="async">
+    <div class="service-img-tag">General Contractor</div>
+  </div>
+</section>
+
+<!-- ── SERVICE 4: REPAIRS ── -->
+<section class="service-section img-right" id="repairs">
+  <div class="service-img-wrap reveal">
+    <img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_900/v1774840521/62521617_2264737223575889_3412814780434481152_n_lsxcwd.jpg"
+      alt="Home repair services" loading="lazy" decoding="async">
+    <div class="service-img-tag">Home Repairs</div>
+  </div>
+  <div class="service-text reveal d1">
+    <div class="service-icon-wrap" aria-hidden="true">
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M30 8a10 10 0 00-10 10c0 2 .5 3.8 1.4 5.4L8 36.8A3.2 3.2 0 0012.4 41l13.2-13.4C27.2 28.5 29 29 31 29c5.5 0 10-4.5 10-10 0-1.2-.2-2.4-.6-3.4L36 20l-4-4 4.4-4.4A10 10 0 0030 8z"/>
+      </svg>
+    </div>
+    <h2>Home Repairs</h2>
+    <p>Stonebridge handles repairs of all sizes. From small cracks in masonry and cosmetic fixes to structural corrections and storm damage remediation, no job is too small to receive our full attention.</p>
+    <p>We approach every repair with the same high standards that define our larger projects: proper diagnosis, quality materials, and workmanship that lasts. We don't patch problems—we solve them.</p>
+    <p>For homeowners who want to maintain the integrity and value of their investment, having a trusted contractor on call makes all the difference. Stonebridge is that contractor.</p>
+  </div>
+</section>
+
+<!-- ── OTHER SERVICES ── -->
+<section class="other-services">
+  <div class="eyebrow reveal">
+    <div class="eyebrow-line" style="background:rgba(255,255,255,.25)"></div>
+    <span class="eyebrow-text" style="color:rgba(255,255,255,.4)">Additional Capabilities</span>
+  </div>
+  <h2 class="reveal d1">Other Services</h2>
+  <p class="sub reveal d1">Stonebridge can also be hired to facilitate any of the project types listed below.</p>
+
+  <div class="other-grid reveal d2">
+    <!-- Row 1 -->
+    <div class="other-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Architecture</span>
+    </div>
+    <div class="other-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      <span>Site Planning</span>
+    </div>
+    <div class="other-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+      <span>Carpentry</span>
+    </div>
+    <div class="other-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      <span>Project Mgmt.</span>
+    </div>
+    <div class="other-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span>Land Acquisition</span>
+    </div>
+    <!-- Row 2 -->
+    <div class="other-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+      <span>Masonry</span>
+    </div>
+    <div class="other-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      <span>Cost Analysis</span>
+    </div>
+    <div class="other-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span>Land Search</span>
+    </div>
+    <div class="other-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <span>Concrete</span>
+    </div>
+    <div class="other-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+      <span>Leasing</span>
+    </div>
+    <!-- Row 3 -->
+    <div class="other-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+      <span>Drywall</span>
+    </div>
+    <div class="other-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6l-8 8M8 6h8v8"/></svg>
+      <span>Excavation</span>
+    </div>
+    <div class="other-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <span>Space Analysis</span>
+    </div>
+    <div class="other-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.5 11 2 7.5 2 5a10 10 0 0120 0c0 2.5-4.5 6-10 17z"/><circle cx="12" cy="5" r="2"/></svg>
+      <span>Painting</span>
+    </div>
+    <div class="other-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+      <span>Gen. Construction</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BAND ── -->
+<div class="cta-band">
+  <h2>Ready to get started on<br>your next project?</h2>
+  <a href="./contact.html" class="btn-primary">Get a Free Estimate</a>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div>
+    <img src="./logo-white.svg" alt="Stonebridge Builders" style="height:36px;width:auto;display:block;margin-bottom:14px;opacity:.9;">
+    <p class="footer-tagline">Professional general contractor.<br>Pennsylvania · North Carolina · Illinois<br>Est. 2009 · Licensed &amp; Insured.</p>
+  </div>
+  <ul class="footer-nav" role="list">
+    <li><a href="./services.html">Services</a></li>
+    <li><a href="./projects.html">Projects</a></li>
+    <li><a href="./contact.html">Contact</a></li>
+  </ul>
+  <p class="footer-copy">&copy; 2025 Stonebridge Builders LLC</p>
+</footer>
+
+<script>
+const ham = document.getElementById('hamburger');
+const drawer = document.getElementById('mobileMenu');
+const links = drawer.querySelectorAll('.drawer-link');
+function openD(){ham.setAttribute('aria-expanded','true');drawer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';links[0].focus();}
+function closeD(){ham.setAttribute('aria-expanded','false');drawer.setAttribute('aria-hidden','true');document.body.style.overflow='';ham.focus();}
+ham.addEventListener('click',()=>ham.getAttribute('aria-expanded')==='false'?openD():closeD());
+links.forEach(l=>l.addEventListener('click',closeD));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ham.getAttribute('aria-expanded')==='true')closeD();});
+const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');ro.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>

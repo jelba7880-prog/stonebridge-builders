@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stonebridge Builders — Professional General Contractor</title>
+<meta name="description" content="Stonebridge Builders is a professional contracting company serving Pennsylvania, North Carolina, and Illinois. Quality construction built to last.">
+<link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+<style>
+/* ─────────────────────────────────────
+   DESIGN TOKENS
+───────────────────────────────────── */
+:root {
+  --navy:      #1D3557;
+  --navy-dark: #142640;
+  --navy-lt:   #2A4A6A;
+  --amber:     #C49128;
+  --amber-h:   #A87A1E;
+  --white:     #FFFFFF;
+  --off-white: #F6F5F2;
+  --cream:     #EFECE6;
+  --border:    #DEDBD4;
+  --text:      #111111;
+  --body:      #383838;
+  --mid:       #646464;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'DM Sans', system-ui, -apple-system, sans-serif;
+  --px: clamp(20px, 5.5vw, 72px);
+  --py: clamp(60px, 9vw, 112px);
+}
+
+/* ─────────────────────────────────────
+   RESET
+───────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { background: var(--white); color: var(--text); font-family: var(--sans); font-weight: 400; overflow-x: hidden; line-height: 1.65; }
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+button { font-family: var(--sans); }
+
+/* ─────────────────────────────────────
+   SCROLL REVEAL — Progressive Enhancement
+   Content is ALWAYS visible by default.
+   JS adds .js-ready to <body> which
+   enables animations — so if JS is slow
+   or blocked, nothing stays hidden.
+───────────────────────────────────── */
+body.js-ready .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .75s cubic-bezier(.22,1,.36,1),
+              transform .75s cubic-bezier(.22,1,.36,1);
+}
+body.js-ready .reveal.visible { opacity: 1; transform: none; }
+body.js-ready .d1 { transition-delay: .1s; }
+body.js-ready .d2 { transition-delay: .2s; }
+body.js-ready .d3 { transition-delay: .3s; }
+
+/* ─────────────────────────────────────
+   NAVIGATION
+───────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px var(--px);
+  transition: background .35s, padding .35s, box-shadow .35s;
+}
+nav.scrolled {
+  background: rgba(255,255,255,.97);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 13px var(--px);
+  box-shadow: 0 1px 0 var(--border);
+}
+.nav-logo {
+  font-family: var(--serif); font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 700; color: #fff; letter-spacing: .02em;
+  z-index: 110; position: relative; transition: color .3s;
+  display: flex; align-items: center; gap: 10px;
+}
+nav.scrolled .nav-logo { color: var(--navy); }
+.logo-white { display: block; }
+.logo-dark  { display: none; }
+nav.scrolled .logo-white { display: none; }
+nav.scrolled .logo-dark  { display: block; }
+
+.nav-links { display: flex; gap: clamp(18px, 2.5vw, 36px); list-style: none; }
+.nav-links a {
+  font-size: .75rem; font-weight: 500; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,.85);
+  transition: color .25s; border-bottom: 1px solid transparent; padding-bottom: 2px;
+}
+.nav-links a:hover { color: #fff; border-color: rgba(255,255,255,.5); }
+nav.scrolled .nav-links a { color: var(--body); }
+nav.scrolled .nav-links a:hover { color: var(--navy); border-color: var(--navy); }
+
+/* ─────────────────────────────────────
+   HAMBURGER
+───────────────────────────────────── */
+.hamburger {
+  display: none; flex-direction: column; justify-content: center; gap: 5px;
+  width: 34px; height: 34px; background: none; border: none; cursor: pointer;
+  z-index: 110; position: relative; padding: 2px;
+}
+.hamburger span {
+  display: block; height: 2px; border-radius: 2px; background: #fff;
+  transition: background .3s, transform .35s, opacity .3s;
+  transform-origin: center;
+}
+nav.scrolled .hamburger span { background: var(--navy); }
+.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--navy) !important; }
+.hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--navy) !important; }
+
+/* ─────────────────────────────────────
+   MOBILE DRAWER
+───────────────────────────────────── */
+.nav-drawer {
+  display: none; position: fixed; inset: 0; z-index: 90;
+  background: #fff; flex-direction: column;
+  align-items: center; justify-content: center; gap: 28px;
+  opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.nav-drawer[aria-hidden="false"] { opacity: 1; pointer-events: all; }
+.nav-drawer a {
+  font-family: var(--serif); font-size: clamp(1.8rem, 7vw, 2.6rem);
+  font-weight: 700; color: var(--navy); letter-spacing: .02em; transition: color .25s;
+}
+.nav-drawer a:hover { color: var(--amber); }
+
+/* ─────────────────────────────────────
+   HERO
+───────────────────────────────────── */
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center;
+  overflow: hidden; padding: 0 var(--px);
+}
+.hero-slides { position: absolute; inset: 0; background: var(--navy-dark); }
+.hero-slide {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+  opacity: 0; transition: opacity 1.4s ease;
+}
+.hero-slide.active { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .hero-slide { transition: none; } }
+.hero-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(135deg, rgba(12,22,40,.65) 0%, rgba(12,22,40,.3) 100%);
+}
+.hero-content {
+  position: relative; z-index: 2; max-width: 720px;
+  animation: hFadeUp 1s .15s both;
+}
+@keyframes hFadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-tag {
+  display: inline-block; font-size: .62rem; font-weight: 500; letter-spacing: .22em;
+  text-transform: uppercase; color: rgba(255,255,255,.7);
+  border: 1px solid rgba(255,255,255,.25); padding: 7px 16px; margin-bottom: 28px;
+}
+.hero h1 {
+  font-family: var(--serif); font-size: clamp(2.4rem, 5.5vw, 4.8rem);
+  font-weight: 700; line-height: 1.1; color: #fff; letter-spacing: -.01em; margin-bottom: 22px;
+}
+.hero h1 em { font-style: italic; color: var(--amber); }
+.hero-sub {
+  font-size: clamp(.9rem, 1.6vw, 1.05rem); font-weight: 300;
+  color: rgba(255,255,255,.78); max-width: 480px; line-height: 1.8; margin-bottom: 36px;
+}
+.btn-primary {
+  display: inline-block; background: var(--amber); color: #fff;
+  font-size: .74rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; padding: 15px 36px; transition: background .25s;
+}
+.btn-primary:hover { background: var(--amber-h); }
+.hero-scroll {
+  position: absolute; bottom: 32px; right: var(--px); z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.hero-scroll span {
+  font-size: .58rem; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(255,255,255,.45); writing-mode: vertical-rl;
+}
+.scroll-bar {
+  width: 1px; height: 52px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,.45));
+  animation: pulse 2s 1.5s infinite;
+}
+@keyframes pulse { 0%,100% { opacity: .4; } 50% { opacity: .9; } }
+
+/* ─────────────────────────────────────
+   SHARED UTILITIES
+───────────────────────────────────── */
+.eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.eyebrow-line { width: 24px; height: 2px; background: var(--amber); flex-shrink: 0; }
+.eyebrow-text { font-size: .62rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--amber); }
+.sec-title { font-family: var(--serif); font-size: clamp(1.7rem, 3.2vw, 2.6rem); font-weight: 700; line-height: 1.2; letter-spacing: -.01em; }
+
+/* ─────────────────────────────────────
+   BRAND STATEMENT
+───────────────────────────────────── */
+.brand {
+  background: var(--navy); padding: var(--py) var(--px);
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 7vw, 90px); align-items: center;
+}
+.brand-left h2 { font-family: var(--serif); font-size: clamp(1.7rem, 3.2vw, 2.6rem); font-weight: 700; line-height: 1.3; color: #fff; }
+.brand-left h2 em { font-style: italic; color: var(--amber); }
+.brand-right p { font-size: clamp(.85rem, 1.5vw, .95rem); line-height: 1.9; color: rgba(255,255,255,.72); font-weight: 300; margin-bottom: 18px; }
+.brand-divider { height: 1px; background: rgba(255,255,255,.1); margin: 32px 0; }
+.brand-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 2.5vw, 28px); }
+.stat-n { font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; color: var(--amber); line-height: 1; margin-bottom: 6px; }
+.stat-l { font-size: .6rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.45); }
+
+/* ─────────────────────────────────────
+   SERVICES
+───────────────────────────────────── */
+.services { padding: var(--py) var(--px); background: var(--off-white); }
+.services-header { margin-bottom: clamp(36px, 5vw, 56px); }
+.services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.service-card {
+  background: var(--white); padding: clamp(28px, 4vw, 44px);
+  border: 1px solid var(--border); display: flex; flex-direction: column;
+  transition: box-shadow .25s, border-color .25s;
+}
+.service-card:hover { border-color: rgba(29,53,87,.2); box-shadow: 0 8px 40px rgba(29,53,87,.08); }
+.service-icon { width: 44px; height: 44px; color: var(--amber); margin-bottom: 20px; flex-shrink: 0; }
+.service-title { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+.service-desc { font-size: .88rem; line-height: 1.85; color: var(--body); flex: 1; margin-bottom: 24px; }
+.service-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--navy); border-bottom: 2px solid var(--amber);
+  padding-bottom: 3px; width: fit-content; transition: color .25s;
+}
+.service-link:hover { color: var(--amber); }
+
+/* ─────────────────────────────────────
+   PROJECTS PREVIEW
+───────────────────────────────────── */
+.projects-preview { padding: var(--py) var(--px); }
+.projects-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: clamp(28px, 4vw, 48px); gap: 16px; flex-wrap: wrap;
+}
+.view-all-btn {
+  font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--navy); border-bottom: 2px solid var(--amber); padding-bottom: 3px;
+  white-space: nowrap; flex-shrink: 0; transition: color .25s;
+}
+.view-all-btn:hover { color: var(--amber); }
+.proj-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; }
+.proj-card { position: relative; overflow: hidden; background: var(--cream); }
+.proj-card-img {
+  width: 100%; aspect-ratio: 4/3; object-fit: cover;
+  display: block; transition: transform .6s cubic-bezier(.22,1,.36,1);
+}
+.proj-card:hover .proj-card-img { transform: scale(1.04); }
+.proj-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(12,22,40,.8) 0%, transparent 55%);
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
+  padding: clamp(16px, 3vw, 28px); opacity: 0; transition: opacity .35s;
+}
+.proj-card:hover .proj-card-overlay,
+.proj-card:focus-within .proj-card-overlay { opacity: 1; }
+@media (hover: none) { .proj-card-overlay { opacity: 1; } }
+.proj-card-name {
+  font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 700; color: #fff; margin-bottom: 12px; line-height: 1.2;
+}
+.proj-view-btn {
+  display: inline-block; background: var(--amber); color: #fff;
+  font-size: .68rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; padding: 10px 20px; transition: background .25s;
+}
+.proj-view-btn:hover { background: var(--amber-h); }
+
+/* ─────────────────────────────────────
+   REVIEWS
+───────────────────────────────────── */
+.reviews { padding: var(--py) var(--px); background: var(--off-white); }
+.reviews-header { margin-bottom: clamp(36px, 5vw, 52px); }
+.reviews-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.review-card {
+  background: var(--white); padding: clamp(24px, 3.5vw, 36px);
+  border: 1px solid var(--border); display: flex; flex-direction: column; gap: 18px;
+}
+.review-top { display: flex; align-items: center; gap: 14px; }
+.review-photo {
+  width: 56px; height: 56px; border-radius: 50%; object-fit: cover;
+  flex-shrink: 0; border: 2px solid var(--border);
+}
+.review-name { font-size: .95rem; font-weight: 600; color: var(--navy); line-height: 1.3; }
+.review-stars { color: var(--amber); font-size: .82rem; margin-top: 4px; letter-spacing: .05em; }
+.review-text {
+  font-size: .88rem; line-height: 1.85; color: var(--body);
+  max-height: 200px; overflow-y: auto; padding-right: 6px;
+  scrollbar-width: thin; scrollbar-color: var(--amber) var(--cream);
+}
+.review-text::-webkit-scrollbar { width: 3px; }
+.review-text::-webkit-scrollbar-track { background: var(--cream); }
+.review-text::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 2px; }
+.review-text p { margin-bottom: 14px; }
+.review-text p:last-child { margin-bottom: 0; }
+
+/* ─────────────────────────────────────
+   ABOUT
+───────────────────────────────────── */
+.about { padding: var(--py) var(--px); background: var(--white); }
+.about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 7vw, 88px); align-items: center; }
+.about-img-wrap { position: relative; }
+.about-img-wrap img { width: 100%; height: clamp(300px, 42vw, 520px); object-fit: cover; }
+.about-tag {
+  position: absolute; bottom: 0; left: 0; background: var(--navy); color: #fff;
+  font-size: .6rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; padding: 12px 20px;
+}
+.about-content .lead {
+  font-family: var(--serif); font-size: clamp(1.1rem, 1.9vw, 1.3rem);
+  font-weight: 600; line-height: 1.55; color: var(--text); margin-bottom: 20px; margin-top: 28px;
+}
+.about-content p { font-size: clamp(.85rem, 1.4vw, .93rem); line-height: 1.95; color: var(--body); margin-bottom: 16px; }
+.about-sig { font-family: var(--serif); font-style: italic; font-size: 1.7rem; font-weight: 600; color: var(--amber); margin-top: 28px; }
+.about-sig-t { font-size: .62rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--mid); margin-top: 4px; }
+
+/* ─────────────────────────────────────
+   CONTACT
+───────────────────────────────────── */
+.contact { background: var(--cream); padding: var(--py) var(--px); }
+.contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(48px, 7vw, 96px); align-items: start; }
+.contact-left > p { font-size: clamp(.85rem, 1.4vw, .93rem); line-height: 1.9; color: var(--body); margin-top: 18px; max-width: 380px; }
+.contact-details { margin-top: 36px; display: flex; flex-direction: column; gap: 22px; }
+.c-label { font-size: .6rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--amber); margin-bottom: 5px; }
+.c-val { font-family: var(--serif); font-size: clamp(.95rem, 1.8vw, 1.15rem); font-weight: 600; color: var(--navy); }
+.c-val a { transition: color .25s; }
+.c-val a:hover { color: var(--amber); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-g { margin-bottom: 22px; }
+.form-g label { display: block; font-size: .62rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--mid); margin-bottom: 8px; }
+.form-g input,
+.form-g textarea,
+.form-g select {
+  width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--border);
+  padding: 9px 0; font-family: var(--sans); font-size: .9rem;
+  color: var(--text); outline: none; -webkit-appearance: none; border-radius: 0;
+  transition: border-color .25s;
+}
+.form-g input:focus,
+.form-g textarea:focus,
+.form-g select:focus { border-color: var(--navy); }
+.form-g textarea { resize: none; height: 88px; }
+.btn-submit {
+  background: var(--navy); color: #fff; font-family: var(--sans);
+  font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  border: none; padding: 15px 44px; cursor: pointer; transition: background .25s; margin-top: 8px;
+}
+.btn-submit:hover { background: var(--navy-lt); }
+
+/* ─────────────────────────────────────
+   FOOTER
+───────────────────────────────────── */
+footer {
+  background: var(--navy-dark);
+  padding: clamp(40px, 6vw, 60px) var(--px) clamp(24px, 4vw, 36px);
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 32px;
+}
+.footer-logo { font-family: var(--serif); font-size: 1.25rem; font-weight: 700; color: #fff; display: block; margin-bottom: 10px; }
+.footer-tagline { font-size: .72rem; font-weight: 300; color: rgba(255,255,255,.4); line-height: 1.8; }
+.footer-nav { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center; }
+.footer-nav a { font-size: .65rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.45); transition: color .25s; }
+.footer-nav a:hover { color: #fff; }
+.footer-copy { font-size: .62rem; color: rgba(255,255,255,.3); align-self: flex-end; }
+
+/* ─────────────────────────────────────
+   RESPONSIVE — TABLET
+───────────────────────────────────── */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .nav-drawer { display: flex; }
+  .hero-scroll { display: none; }
+  .brand { grid-template-columns: 1fr; gap: 44px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .about-inner { grid-template-columns: 1fr; gap: 40px; }
+  .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+  .contact-left > p { max-width: 100%; }
+  .footer-copy { align-self: auto; }
+}
+
+/* ─────────────────────────────────────
+   RESPONSIVE — MOBILE
+───────────────────────────────────── */
+@media (max-width: 580px) {
+  nav { padding: 18px 20px; }
+  nav.scrolled { padding: 12px 20px; }
+  .hero { padding: 0 20px clamp(48px, 12vw, 72px); }
+  .brand, .services, .projects-preview, .reviews, .about, .contact {
+    padding-top: clamp(52px, 12vw, 80px);
+    padding-bottom: clamp(52px, 12vw, 80px);
+    padding-left: 20px; padding-right: 20px;
+  }
+  .proj-grid { grid-template-columns: 1fr; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .brand-stats { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-row { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 24px; padding-left: 20px; padding-right: 20px; }
+}
+@media (max-width: 380px) {
+  .hero h1 { font-size: 2rem; }
+  .brand-stats { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="mainNav">
+  <a href="./index.html" class="nav-logo" aria-label="Stonebridge Builders — Home">
+    <img src="./logo-white.svg" alt="Stonebridge Builders" class="logo-white" height="38">
+    <img src="./logo-dark.svg"  alt="Stonebridge Builders" class="logo-dark"  height="38">
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="./services.html">Services</a></li>
+    <li><a href="./projects.html">Projects</a></li>
+    <li><a href="./contact.html">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger"
+    aria-expanded="false" aria-controls="mobileMenu" aria-label="Open navigation menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile drawer -->
+<div class="nav-drawer" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu" aria-hidden="true">
+  <a href="./services.html" class="drawer-link">Services</a>
+  <a href="./projects.html" class="drawer-link">Projects</a>
+  <a href="./contact.html" class="drawer-link">Contact</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="home" aria-label="Homepage hero">
+  <div class="hero-slides" id="heroSlides">
+    <div class="hero-slide active" style="background-image:url('https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1600/v1774842001/183681158_3987631661286428_7947344654784395936_n_qlkjvg.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1600/v1774840519/62496283_2264671853582426_579849533039575040_n_lqcnh1.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1600/v1774834004/gs_house-1-gallery-2_up7mtg.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1600/v1774832516/gs_house-5-7_slqc2v.jpg')"></div>
+  </div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Est. 2009 &nbsp;·&nbsp; Licensed &nbsp;·&nbsp; Insured</span>
+    <h1>Building with<br><em>Integrity.</em><br>Crafted to Last.</h1>
+    <p class="hero-sub">Stonebridge Builders is a professional contracting company with a proven track record of quality construction across Pennsylvania, North Carolina, and Illinois.</p>
+    <a href="./contact.html" class="btn-primary">Start Your Project</a>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="scroll-bar"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ══ BRAND STATEMENT ══ -->
+<section class="brand" id="brand">
+  <div class="brand-left">
+    <div class="eyebrow reveal" style="margin-bottom:22px">
+      <div class="eyebrow-line" style="background:rgba(255,255,255,.25)"></div>
+      <span class="eyebrow-text" style="color:rgba(255,255,255,.4)">Who We Are</span>
+    </div>
+    <h2 class="reveal d1">We don't just build<br>structures. We build<br><em>lasting value.</em></h2>
+  </div>
+  <div class="brand-right reveal d2">
+    <p>Stonebridge Builders was founded on a simple belief: every project, large or small, deserves the same commitment to quality, transparency, and craftsmanship. We bring professional-grade construction to homeowners and businesses across three states.</p>
+    <p>Whether you're building your dream home, renovating an existing space, or need reliable repair work, our experienced team delivers results you can count on — on time and within budget.</p>
+    <div class="brand-divider"></div>
+    <div class="brand-stats">
+      <div><div class="stat-n">87+</div><div class="stat-l">Projects Completed</div></div>
+      <div><div class="stat-n">15+</div><div class="stat-l">Years of Experience</div></div>
+      <div><div class="stat-n">3</div><div class="stat-l">States Served</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICES ══ -->
+<section class="services" id="services">
+  <div class="services-header">
+    <div class="eyebrow reveal"><div class="eyebrow-line"></div><span class="eyebrow-text">What We Do</span></div>
+    <h2 class="sec-title reveal d1">Our Services</h2>
+  </div>
+  <div class="services-grid">
+
+    <div class="service-card reveal">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="6" y="6" width="36" height="36" rx="2"/>
+        <line x1="6" y1="14" x2="42" y2="14"/>
+        <line x1="16" y1="6" x2="16" y2="14"/>
+        <line x1="32" y1="6" x2="32" y2="14"/>
+        <path d="M14 26h4l4-8 4 14 4-8h4"/>
+      </svg>
+      <h3 class="service-title">Design / Build</h3>
+      <p class="service-desc">Our design/build process always starts by building a strong relationship with our clients. Using a general contractor such as Stonebridge is a great way to streamline your project from concept through completion under one trusted roof.</p>
+      <a href="./services.html#design-build" class="service-link">Learn More <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="service-card reveal d1">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M8 38L20 26"/>
+        <path d="M20 26l3-3 3 3-3 3z"/>
+        <path d="M24 22l12-12a3 3 0 014 4L28 26"/>
+        <path d="M10 34l4 4"/>
+        <circle cx="13" cy="37" r="5"/>
+      </svg>
+      <h3 class="service-title">Renovation &amp; Remodeling</h3>
+      <p class="service-desc">At Stonebridge, we've seen a thing or two. Utilizing a mix of hard-earned construction wisdom, creativity, and determination, we help our clients transform their homes into the spaces they've always envisioned.</p>
+      <a href="./services.html#renovation" class="service-link">Learn More <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="service-card reveal d2">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 42V22l18-14 18 14v20H6z"/>
+        <rect x="18" y="30" width="12" height="12"/>
+        <path d="M18 30v-6h12v6"/>
+        <line x1="6" y1="22" x2="24" y2="10"/>
+        <line x1="42" y1="22" x2="24" y2="10"/>
+      </svg>
+      <h3 class="service-title">General Contractor</h3>
+      <p class="service-desc">Stonebridge Construction LLC is a master of craft. We have built homes of every shape and size. Whether you're building a sleek modern ranch or a rustic three-story cabin, our team has the expertise to bring it to life.</p>
+      <a href="./services.html#general-contractor" class="service-link">Learn More <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="service-card reveal d3">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M30 8a10 10 0 00-10 10c0 2 .5 3.8 1.4 5.4L8 36.8A3.2 3.2 0 0012.4 41l13.2-13.4C27.2 28.5 29 29 31 29c5.5 0 10-4.5 10-10 0-1.2-.2-2.4-.6-3.4L36 20l-4-4 4.4-4.4A10 10 0 0030 8z"/>
+      </svg>
+      <h3 class="service-title">Home Repairs</h3>
+      <p class="service-desc">Stonebridge handles repairs of all sizes — from minor cracks and cosmetic fixes to structural corrections. We approach every repair with the same high standards and attention to detail that define all of our work.</p>
+      <a href="./services.html#repairs" class="service-link">Learn More <span aria-hidden="true">→</span></a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ PROJECTS PREVIEW ══ -->
+<section class="projects-preview" id="projects">
+  <div class="projects-header">
+    <div>
+      <div class="eyebrow reveal"><div class="eyebrow-line"></div><span class="eyebrow-text">Our Work</span></div>
+      <h2 class="sec-title reveal d1">Recent Projects</h2>
+    </div>
+    <a href="./projects.html" class="view-all-btn reveal d2">View All Projects →</a>
+  </div>
+  <div class="proj-grid">
+
+    <div class="proj-card reveal">
+      <img class="proj-card-img"
+        src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_800/v1774832516/gs_house-5-7_slqc2v.jpg"
+        alt="Black Stone Ridge project" loading="lazy" decoding="async">
+      <div class="proj-card-overlay">
+        <span class="proj-card-name">Black Stone Ridge</span>
+        <a href="./project-blackstone.html" class="proj-view-btn">View Project</a>
+      </div>
+    </div>
+
+    <div class="proj-card reveal d1">
+      <img class="proj-card-img"
+        src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_800/v1774833798/gs_house-2-gallery-4_cvagvt.jpg"
+        alt="Cozy Country Living project" loading="lazy" decoding="async">
+      <div class="proj-card-overlay">
+        <span class="proj-card-name">Cozy Country Living</span>
+        <a href="./project-country.html" class="proj-view-btn">View Project</a>
+      </div>
+    </div>
+
+    <div class="proj-card reveal d2">
+      <img class="proj-card-img"
+        src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_800/v1774834000/gs_house-1-51-d_tyoua0.jpg"
+        alt="A Rustic Masterpiece project" loading="lazy" decoding="async">
+      <div class="proj-card-overlay">
+        <span class="proj-card-name">A Rustic Masterpiece</span>
+        <a href="./project-rustic.html" class="proj-view-btn">View Project</a>
+      </div>
+    </div>
+
+    <div class="proj-card reveal d3">
+      <img class="proj-card-img"
+        src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_800/v1774835557/gs_house-3-gallery-2_bdhfuz.jpg"
+        alt="Lakeside Getaway project" loading="lazy" decoding="async">
+      <div class="proj-card-overlay">
+        <span class="proj-card-name">Lakeside Getaway</span>
+        <a href="./project-lakeside.html" class="proj-view-btn">View Project</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ REVIEWS ══ -->
+<section class="reviews" id="reviews">
+  <div class="reviews-header">
+    <div class="eyebrow reveal"><div class="eyebrow-line"></div><span class="eyebrow-text">Client Stories</span></div>
+    <h2 class="sec-title reveal d1">What Our Clients Say</h2>
+  </div>
+  <div class="reviews-grid">
+
+    <div class="review-card reveal">
+      <div class="review-top">
+        <img class="review-photo"
+          src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_120/v1774842001/183681158_3987631661286428_7947344654784395936_n_qlkjvg.jpg"
+          alt="James and Jenn Semrad" loading="lazy" decoding="async">
+        <div>
+          <div class="review-name">James &amp; Jenn Semrad</div>
+          <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        </div>
+      </div>
+      <div class="review-text">
+        <p>When we set out to find a homebuilder, my wife and I realized we would be making the biggest financial investment decision of our lives. After meeting multiple builders, we chose Sean and Stonebridge — the only builder others in the industry spoke highly of by name.</p>
+        <p>Sean was available at any hour, never afraid to flag a problem early, and his attention to detail is something you can actually feel in the finished home. The process was flexible, communicative, and refreshingly honest.</p>
+        <p>Having completed our project in 2018, we now consider Sean a friend. We will forever be thankful we chose to build with Stonebridge Builders.</p>
+      </div>
+    </div>
+
+    <div class="review-card reveal d1">
+      <div class="review-top">
+        <img class="review-photo"
+          src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_120/v1774834004/gs_house-1-gallery-2_up7mtg.jpg"
+          alt="Frank and Stephanie Lueptow" loading="lazy" decoding="async">
+        <div>
+          <div class="review-name">Frank &amp; Stephanie Lueptow</div>
+          <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        </div>
+      </div>
+      <div class="review-text">
+        <p>We have known Sean Timmer for 7 years. A friend recommended him when we were building a new house. Sean listened, spoke to us at our level, and made smart recommendations that proved right every time.</p>
+        <p>He's since worked with us on our house, detached garage, grocery store, deli, liquor store, and more. Sean is a hands-on guy who holds everyone to the standard he holds himself.</p>
+        <p>In a few words: Stonebridge is a quality operation — on time, on budget, fair, and honest. I'd recommend them for any job, large or small.</p>
+      </div>
+    </div>
+
+    <div class="review-card reveal d2">
+      <div class="review-top">
+        <img class="review-photo"
+          src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_120/v1774835557/gs_house-3-3-display_ner0ve.jpg"
+          alt="Wally and Danna Richardson" loading="lazy" decoding="async">
+        <div>
+          <div class="review-name">Wally &amp; Danna Richardson</div>
+          <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        </div>
+      </div>
+      <div class="review-text">
+        <p>We are so pleased with our new home that words can't fully explain it. The quality of the construction was only exceeded by the service Sean provided throughout the entire process.</p>
+        <p>From the initial walkthrough before we even purchased the land to the day we moved in, Sean was there for every question and concern. That kind of service is rare in today's world.</p>
+        <p>Thank you to the entire Stonebridge team for making our dream home a reality — we truly love it.</p>
+      </div>
+    </div>
+
+    <div class="review-card reveal d3">
+      <div class="review-top">
+        <img class="review-photo"
+          src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_120/v1774833795/gs_house-2-gallery-2_whlfno.jpg"
+          alt="Mark and Shari Moder" loading="lazy" decoding="async">
+        <div>
+          <div class="review-name">Mark &amp; Shari Moder</div>
+          <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        </div>
+      </div>
+      <div class="review-text">
+        <p>We are very happy with how our house turned out thanks to Stonebridge. Our architect gave us Sean's name and just from talking to him I knew he was our builder.</p>
+        <p>The neighbors commented on how meticulous the crew was — always measuring, reminding me of "measure twice, cut once." We were kept up to date every step of the way.</p>
+        <p>Sean made smart aging-in-place suggestions at no extra cost. The crew was friendly, respectful, and cleaned up daily. We highly recommend Stonebridge Construction LLC.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-img-wrap reveal">
+      <img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_900/v1774834004/gs_house-1-gallery-2_up7mtg.jpg"
+        alt="Stonebridge Builders at work" loading="lazy" decoding="async">
+      <div class="about-tag">PA · NC · IL &nbsp;·&nbsp; Est. 2009</div>
+    </div>
+    <div class="about-content">
+      <div class="eyebrow reveal"><div class="eyebrow-line"></div><span class="eyebrow-text">Our Story</span></div>
+      <h2 class="sec-title reveal d1">Rooted in craft.<br>Built on trust.</h2>
+      <p class="lead reveal d1">Stonebridge Builders was founded in 2009 by Sean Timmer, a builder who believed that exceptional results don't happen by accident — they happen by intention.</p>
+      <p class="reveal d2">After years in the industry, Sean built Stonebridge around what matters most: listening to the client, doing the job right, and standing behind every nail driven and every wall raised.</p>
+      <p class="reveal d2">We operate across Pennsylvania, North Carolina, and Illinois — taking on select projects each year so every client gets our full attention from first handshake to final walk-through.</p>
+      <div class="reveal d3">
+        <div class="about-sig">Sean Timmer</div>
+        <div class="about-sig-t">Founder &amp; Principal Builder</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <div class="eyebrow reveal"><div class="eyebrow-line"></div><span class="eyebrow-text">Get In Touch</span></div>
+      <h2 class="sec-title reveal d1">Let's build<br>something together</h2>
+      <p class="reveal d2">We're currently accepting inquiries for new projects. Fill out the form and we'll follow up within one business day.</p>
+      <div class="contact-details">
+        <div class="reveal d2">
+          <div class="c-label">Phone</div>
+          <div class="c-val"><a href="tel:+16175550182">(617) 555-0182</a></div>
+        </div>
+        <div class="reveal d3">
+          <div class="c-label">Email</div>
+          <!-- Email written as HTML entities to prevent bot scraping -->
+          <div class="c-val"><a href="/cdn-cgi/l/email-protection#9ff7faf3f3f0b9bca9aba4ecebf0f1fafdedf6fbf8fafdeaf6f3fbfaedecb9bcaba9a4fcf0f2">hello&#64;stonebridgebuilders&#46;com</a></div>
+        </div>
+        <div class="reveal d3">
+          <div class="c-label">Service Area</div>
+          <div class="c-val" style="font-size:.95rem;line-height:1.65">Pennsylvania · North Carolina<br>Illinois</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal d2">
+      <div class="form-row">
+        <div class="form-g">
+          <label for="fname">Full Name</label>
+          <input type="text" id="fname" name="name" placeholder="Your name" autocomplete="name">
+        </div>
+        <div class="form-g">
+          <label for="femail">Email</label>
+          <input type="email" id="femail" name="email" placeholder="you@email.com" autocomplete="email">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-g">
+          <label for="fphone">Phone</label>
+          <input type="tel" id="fphone" name="phone" placeholder="(xxx) xxx-xxxx" autocomplete="tel">
+        </div>
+        <div class="form-g">
+          <label for="ftype">Project Type</label>
+          <select id="ftype" name="project_type">
+            <option value="" disabled selected>Select a type</option>
+            <option>New Construction</option>
+            <option>Renovation / Remodel</option>
+            <option>General Contracting</option>
+            <option>Repairs</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-g">
+        <label for="fmsg">Tell Us About Your Project</label>
+        <textarea id="fmsg" name="message" placeholder="Describe your project, timeline, and any questions..."></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Send Inquiry</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div>
+    <img src="./logo-white.svg" alt="Stonebridge Builders" style="height:36px;width:auto;display:block;margin-bottom:14px;opacity:.9;">
+    <p class="footer-tagline">Professional general contractor.<br>Pennsylvania · North Carolina · Illinois<br>Est. 2009 · Licensed &amp; Insured.</p>
+  </div>
+  <ul class="footer-nav" role="list">
+    <li><a href="./services.html">Services</a></li>
+    <li><a href="./projects.html">Projects</a></li>
+    <li><a href="./contact.html">Contact</a></li>
+  </ul>
+  <p class="footer-copy">&copy; 2025 Stonebridge Builders LLC</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ── Step 1: Tell CSS that JS is running — unlocks scroll animations ── */
+document.body.classList.add('js-ready');
+
+/* ── Hero slideshow: random start, 10s rotation ── */
+(function () {
+  var slides = document.querySelectorAll('.hero-slide');
+  if (!slides.length) return;
+  var cur = Math.floor(Math.random() * slides.length);
+  slides.forEach(function (s) { s.classList.remove('active'); });
+  slides[cur].classList.add('active');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  setInterval(function () {
+    slides[cur].classList.remove('active');
+    cur = (cur + 1) % slides.length;
+    slides[cur].classList.add('active');
+  }, 10000);
+}());
+
+/* ── Nav: add .scrolled class when user scrolls down ── */
+var nav = document.getElementById('mainNav');
+window.addEventListener('scroll', function () {
+  nav.classList.toggle('scrolled', window.scrollY > 55);
+}, { passive: true });
+
+/* ── Mobile drawer ── */
+var ham = document.getElementById('hamburger');
+var drawer = document.getElementById('mobileMenu');
+var drawerLinks = drawer.querySelectorAll('.drawer-link');
+
+function openDrawer() {
+  ham.setAttribute('aria-expanded', 'true');
+  drawer.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  if (drawerLinks[0]) drawerLinks[0].focus();
+}
+function closeDrawer() {
+  ham.setAttribute('aria-expanded', 'false');
+  drawer.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  ham.focus();
+}
+ham.addEventListener('click', function () {
+  ham.getAttribute('aria-expanded') === 'false' ? openDrawer() : closeDrawer();
+});
+drawerLinks.forEach(function (l) { l.addEventListener('click', closeDrawer); });
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && ham.getAttribute('aria-expanded') === 'true') closeDrawer();
+});
+
+/* ── Scroll reveal (IntersectionObserver) ── */
+if ('IntersectionObserver' in window) {
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(function (el) {
+    observer.observe(el);
+  });
+}
+
+/* ── Smooth scroll for in-page anchor links ── */
+document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+  a.addEventListener('click', function (e) {
+    var target = document.querySelector(a.getAttribute('h

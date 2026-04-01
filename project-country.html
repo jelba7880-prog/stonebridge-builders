@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cozy Country Living — Stonebridge Builders</title>
+<link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1D3557;--navy-dark:#142640;--navy-light:#2A4A6A;--amber:#C49128;--amber-h:#A87A1E;--white:#FFFFFF;--off-white:#F6F5F2;--cream:#EFECE6;--border:#DEDBD4;--text:#111111;--body:#383838;--mid:#646464;--serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',system-ui,-apple-system,sans-serif;--px:clamp(20px,5.5vw,72px);}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{background:var(--white);color:var(--text);font-family:var(--sans);font-weight:400;overflow-x:hidden;line-height:1.65;}
+img{display:block;max-width:100%;}
+a{text-decoration:none;color:inherit;}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:14px var(--px);background:rgba(255,255,255,.97);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--border);}
+.nav-logo{font-family:var(--serif);font-size:clamp(1rem,2vw,1.3rem);font-weight:700;color:var(--navy);z-index:110;position:relative;}
+.nav-links{display:flex;gap:clamp(18px,2.5vw,36px);list-style:none;}
+.nav-links a{font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--body);transition:color .25s;border-bottom:1px solid transparent;padding-bottom:2px;}
+.nav-links a:hover,.nav-links a.active{color:var(--navy);border-color:var(--navy);}
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:34px;height:34px;background:none;border:none;cursor:pointer;z-index:110;padding:2px;}
+.hamburger span{display:block;height:2px;border-radius:2px;background:var(--navy);transition:transform .35s,opacity .3s;transform-origin:center;}
+.hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger[aria-expanded="true"] span:nth-child(2){opacity:0;}
+.hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.nav-drawer{display:none;position:fixed;inset:0;z-index:90;background:#fff;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;pointer-events:none;transition:opacity .3s;}
+.nav-drawer[aria-hidden="false"]{opacity:1;pointer-events:all;}
+.nav-drawer a{font-family:var(--serif);font-size:clamp(1.8rem,7vw,2.6rem);font-weight:700;color:var(--navy);transition:color .25s;}
+.nav-drawer a:hover{color:var(--amber);}
+.proj-hero{position:relative;height:clamp(300px,55vw,580px);overflow:hidden;}
+.proj-hero img{width:100%;height:100%;object-fit:cover;}
+.proj-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,22,40,.75) 0%,rgba(12,22,40,.2) 60%,transparent 100%);}
+.proj-hero-content{position:absolute;bottom:0;left:0;right:0;padding:clamp(28px,5vw,60px) var(--px);}
+.back-link{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:16px;transition:color .25s;}
+.back-link:hover{color:#fff;}
+.proj-hero-content h1{font-family:var(--serif);font-size:clamp(2rem,5vw,3.6rem);font-weight:700;color:#fff;line-height:1.1;}
+.proj-body{max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,80px) var(--px);}
+.proj-desc-wrap{display:grid;grid-template-columns:2fr 1fr;gap:clamp(40px,6vw,80px);margin-bottom:clamp(48px,7vw,80px);align-items:start;}
+.proj-desc-text p{font-size:clamp(.9rem,1.5vw,1rem);line-height:1.95;color:var(--body);margin-bottom:16px;}
+.proj-desc-text p:last-child{margin-bottom:0;}
+.proj-meta{background:var(--off-white);padding:28px;border-left:3px solid var(--amber);}
+.proj-meta-label{font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:6px;}
+.proj-meta-val{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--navy);margin-bottom:20px;}
+.proj-meta-val:last-child{margin-bottom:0;}
+.gallery-header{margin-bottom:clamp(24px,4vw,36px);}
+.gallery-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.gallery-eyebrow span:first-child{width:24px;height:2px;background:var(--amber);display:block;}
+.gallery-eyebrow span:last-child{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);}
+.gallery-title{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;color:var(--navy);}
+.masonry{columns:3;column-gap:clamp(8px,1.5vw,14px);}
+.masonry-item{break-inside:avoid;margin-bottom:clamp(8px,1.5vw,14px);overflow:hidden;}
+.masonry-item img{width:100%;display:block;transition:transform .5s cubic-bezier(.22,1,.36,1);}
+.masonry-item:hover img{transform:scale(1.02);}
+.proj-cta{background:var(--navy);padding:clamp(48px,7vw,80px) var(--px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.proj-cta h2{font-family:var(--serif);font-size:clamp(1.4rem,3vw,2rem);font-weight:700;color:#fff;}
+.btn-primary{display:inline-block;background:var(--amber);color:#fff;font-family:var(--sans);font-size:.74rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:14px 32px;transition:background .25s;white-space:nowrap;}
+.btn-primary:hover{background:var(--amber-h);}
+footer{background:var(--navy-dark);padding:clamp(40px,6vw,60px) var(--px) clamp(24px,4vw,36px);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:32px;}
+.footer-logo{font-family:var(--serif);font-size:1.25rem;font-weight:700;color:#fff;display:block;margin-bottom:10px;}
+.footer-tagline{font-size:.72rem;font-weight:300;color:rgba(255,255,255,.4);line-height:1.8;}
+.footer-nav{list-style:none;display:flex;flex-wrap:wrap;gap:8px 24px;}
+.footer-nav a{font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .25s;}
+.footer-nav a:hover{color:#fff;}
+.footer-copy{font-size:.62rem;color:rgba(255,255,255,.3);align-self:flex-end;}
+@media(max-width:900px){.nav-links{display:none;}.hamburger{display:flex;}.nav-drawer{display:flex;}.proj-desc-wrap{grid-template-columns:1fr;}.masonry{columns:2;}}
+@media(max-width:580px){nav{padding:14px 20px;}.proj-body{padding-left:20px;padding-right:20px;}.proj-hero-content{padding-left:20px;padding-right:20px;}.proj-cta{padding-left:20px;padding-right:20px;}.masonry{columns:1;}footer{flex-direction:column;gap:24px;padding-left:20px;padding-right:20px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="./index.html" class="nav-logo">
+    <img src="./logo-dark.svg" alt="Stonebridge Builders" height="38">
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="./services.html">Services</a></li>
+    <li><a href="./projects.html" class="active">Projects</a></li>
+    <li><a href="./contact.html">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open navigation menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-drawer" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu" aria-hidden="true">
+  <a href="./services.html" class="drawer-link">Services</a>
+  <a href="./projects.html" class="drawer-link">Projects</a>
+  <a href="./contact.html" class="drawer-link">Contact</a>
+</div>
+
+<div class="proj-hero">
+  <img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1600/v1774833798/gs_house-2-gallery-4_cvagvt.jpg" alt="Cozy Country Living" fetchpriority="high">
+  <div class="proj-hero-overlay"></div>
+  <div class="proj-hero-content">
+    <a href="./projects.html" class="back-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> All Projects</a>
+    <h1>Cozy Country Living</h1>
+  </div>
+</div>
+
+<div class="proj-body">
+  <div class="proj-desc-wrap">
+    <div class="proj-desc-text"><p>This new construction home for a growing family is a standout example of exceptional design paired with a seamless construction process. Every element—from the structural framing to the carefully selected interior finishes—was executed with care, precision, and a commitment to quality that Stonebridge is known for. Keep scrolling to explore the finished result.</p></div>
+    <div class="proj-meta">
+      <div class="proj-meta-label">Project Type</div>
+      <div class="proj-meta-val">New Construction</div>
+      <div class="proj-meta-label">State</div>
+      <div class="proj-meta-val">North Carolina</div>
+      <div class="proj-meta-label">Builder</div>
+      <div class="proj-meta-val">Stonebridge Builders LLC</div>
+    </div>
+  </div>
+
+  <div class="gallery-header">
+    <div class="gallery-eyebrow"><span></span><span>Project Gallery</span></div>
+    <h2 class="gallery-title">Photo Gallery</h2>
+  </div>
+  <div class="masonry">
+<div class="masonry-item"><img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1200/v1774833795/gs_house-2-gallery-2_whlfno.jpg" alt="Project photo" loading="lazy" decoding="async"></div>
+<div class="masonry-item"><img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1200/v1774833793/gs_house-2-gallery-1_tvmmyd.jpg" alt="Project photo" loading="lazy" decoding="async"></div>
+<div class="masonry-item"><img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1200/v1774833796/gs_house-2-gallery-3_asuwzw.jpg" alt="Project photo" loading="lazy" decoding="async"></div>
+<div class="masonry-item"><img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1200/v1774833798/gs_house-2-gallery-4_cvagvt.jpg" alt="Project photo" loading="lazy" decoding="async"></div>
+<div class="masonry-item"><img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1200/v1774833798/gs_house-2-6-display_lbqqrl.jpg" alt="Project photo" loading="lazy" decoding="async"></div>
+<div class="masonry-item"><img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1200/v1774833799/gs_house-2-gallery-6_knf1gd.jpg" alt="Project photo" loading="lazy" decoding="async"></div>
+<div class="masonry-item"><img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1200/v1774833802/gs_house-2-gallery-10_byxzw1.jpg" alt="Project photo" loading="lazy" decoding="async"></div>
+<div class="masonry-item"><img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1200/v1774833805/gs_house-2-gallery-11_yukkgy.jpg" alt="Project photo" loading="lazy" decoding="async"></div>
+<div class="masonry-item"><img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1200/v1774833805/gs_house-2-gallery-12_edyigo.jpg" alt="Project photo" loading="lazy" decoding="async"></div>
+<div class="masonry-item"><img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1200/v1774833808/gs_house-2-gallery-13_r7xxvf.jpg" alt="Project photo" loading="lazy" decoding="async"></div>
+  </div>
+</div>
+
+<div class="proj-cta">
+  <h2>Inspired? Let's build<br>something together.</h2>
+  <a href="./contact.html" class="btn-primary">Start Your Project</a>
+</div>
+
+<footer>
+  <div><img src="./logo-white.svg" alt="Stonebridge Builders" style="height:36px;width:auto;display:block;margin-bottom:14px;opacity:.9;"><p class="footer-tagline">Professional general contractor.<br>Pennsylvania · North Carolina · Illinois<br>Est. 2009 · Licensed &amp; Insured.</p></div>
+  <ul class="footer-nav" role="list"><li><a href="./services.html">Services</a></li><li><a href="./projects.html">Projects</a></li><li><a href="./contact.html">Contact</a></li></ul>
+  <p class="footer-copy">&copy; 2025 Stonebridge Builders LLC</p>
+</footer>
+
+<script>
+const ham=document.getElementById('hamburger');
+const drawer=document.getElementById('mobileMenu');
+const dlinks=drawer.querySelectorAll('.drawer-link');
+function openD(){{ham.setAttribute('aria-expanded','true');drawer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';dlinks[0].focus();}}
+function closeD(){{ham.setAttribute('aria-expanded','false');drawer.setAttribute('aria-hidden','true');document.body.style.overflow='';ham.focus();}}
+ham.addEventListener('click',()=>ham.getAttribute('aria-expanded')==='false'?openD():closeD());
+dlinks.forEach(l=>l.addEventListener('click',closeD));
+document.addEventListener('keydown',e=>{{if(e.key==='Escape'&&ham.getAttribute('aria-expanded')==='true')closeD();}});
+// Lightbox
+const imgs=document.querySelectorAll('.masonry-item img');
+const lb=document.createElement('div');
+lb.style.cssText='display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1000;align-items:center;justify-content:center;cursor:pointer;';
+lb.innerHTML='<img style="max-width:94vw;max-height:92vh;object-fit:contain;border:2px solid rgba(255,255,255,.1);" alt=""><button style="position:absolute;top:20px;right:24px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;font-family:sans-serif;line-height:1;" aria-label="Close lightbox">&times;</button>';
+document.body.appendChild(lb);
+const lbImg=lb.querySelector('img');
+const lbClose=lb.querySelector('button');
+imgs.forEach(img=>{{img.style.cursor='zoom-in';img.addEventListener('click',()=>{{lbImg.src=img.src.replace(/w_\d+/,'w_1400');lb.style.display='flex';}});}});
+[lb,lbClose].forEach(el=>el.addEventListener('click',e=>{{if(e.target===lb||e.target===lbClose)lb.style.display='none';}}));
+document.addEventListener('keydown',e=>{{if(e.key==='Escape')lb.style.display='none';}});
+</script>
+</body>
+</html>
