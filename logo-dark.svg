@@ -9,7 +9,7 @@
     <line x1="-2" y1="46" x2="44" y2="46" stroke="#1D3557" stroke-width="2" stroke-linecap="round"/>
   </g>
   <line x1="57" y1="10" x2="57" y2="62" stroke="#DEDBD4" stroke-width="1"/>
-  <text x="68" y="21" font-family="'DM Sans',system-ui,sans-serif" font-size="6" fill="#C49128" letter-spacing="2.2" font-weight="500">EST. 2009</text>
+  <text x="68" y="21" font-family="'DM Sans',system-ui,sans-serif" font-size="6" fill="#C49128" letter-spacing="2.2" font-weight="500">EST. 2015</text>
   <text x="68" y="44" font-family="'Playfair Display',Georgia,serif" font-size="20" fill="#1D3557" font-weight="700" letter-spacing="0.5">STONEBRIDGE</text>
   <text x="70" y="57" font-family="'DM Sans',system-ui,sans-serif" font-size="7" fill="#646464" font-weight="500" letter-spacing="4">BUILDERS</text>
 </svg>

@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <title>Stonebridge Builders — Professional General Contractor</title>
 <meta name="description" content="Stonebridge Builders is a professional contracting company serving Pennsylvania, North Carolina, and Illinois. Quality construction built to last.">
 <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
@@ -37,8 +38,8 @@
    RESET
 ───────────────────────────────────── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body { background: var(--white); color: var(--text); font-family: var(--sans); font-weight: 400; overflow-x: hidden; line-height: 1.65; }
+html { scroll-behavior: smooth; font-size: 16px; overscroll-behavior: none; background: #1D3557; }
+body { background: var(--white); color: var(--text); font-family: var(--sans); font-weight: 400; overflow-x: hidden; line-height: 1.65; overscroll-behavior: none; }
 img { display: block; max-width: 100%; }
 a { text-decoration: none; color: inherit; }
 button { font-family: var(--sans); }
@@ -68,13 +69,14 @@ nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 22px var(--px);
-  background: var(--navy);
   transition: background .35s, padding .35s, box-shadow .35s;
 }
 nav.scrolled {
-  background: var(--navy);
+  background: rgba(255,255,255,.97);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   padding: 13px var(--px);
-  box-shadow: 0 1px 0 rgba(255,255,255,.1);
+  box-shadow: 0 1px 0 var(--border);
 }
 .nav-logo {
   font-family: var(--serif); font-size: clamp(1rem, 2vw, 1.3rem);
@@ -82,11 +84,11 @@ nav.scrolled {
   z-index: 110; position: relative; transition: color .3s;
   display: flex; align-items: center; gap: 10px;
 }
-nav.scrolled .nav-logo { color: #fff; }
+nav.scrolled .nav-logo { color: var(--navy); }
 .logo-white { display: block; }
 .logo-dark  { display: none; }
-nav.scrolled .logo-white { display: block; }
-nav.scrolled .logo-dark  { display: none; }
+nav.scrolled .logo-white { display: none; }
+nav.scrolled .logo-dark  { display: block; }
 
 .nav-links { display: flex; gap: clamp(18px, 2.5vw, 36px); list-style: none; }
 .nav-links a {
@@ -95,6 +97,8 @@ nav.scrolled .logo-dark  { display: none; }
   transition: color .25s; border-bottom: 1px solid transparent; padding-bottom: 2px;
 }
 .nav-links a:hover { color: #fff; border-color: rgba(255,255,255,.5); }
+nav.scrolled .nav-links a { color: var(--body); }
+nav.scrolled .nav-links a:hover { color: var(--navy); border-color: var(--navy); }
 
 /* ─────────────────────────────────────
    HAMBURGER
@@ -109,9 +113,10 @@ nav.scrolled .logo-dark  { display: none; }
   transition: background .3s, transform .35s, opacity .3s;
   transform-origin: center;
 }
-.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: #fff !important; }
+.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--navy) !important; }
 .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: #fff !important; }
+.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--navy) !important; }
+nav.scrolled .hamburger span { background: var(--navy); }
 
 /* ─────────────────────────────────────
    MOBILE DRAWER
@@ -143,8 +148,23 @@ nav.scrolled .logo-dark  { display: none; }
   background-size: cover; background-position: center; background-repeat: no-repeat;
   opacity: 0; transition: opacity 1.4s ease;
 }
-.hero-slide.active { opacity: 1; }
-@media (prefers-reduced-motion: reduce) { .hero-slide { transition: none; } }
+.hero-slide { transform: scale(1.15); }
+.hero-slide.active { opacity: 1; animation: kenBurns 10s ease-out forwards; }
+@keyframes kenBurns {
+  from { transform: scale(1.15); }
+  to   { transform: scale(1.0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide { transition: none; transform: none; }
+  .hero-slide.active { animation: none; }
+}
+.hero-halftone {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,1) 1px, transparent 1px);
+  background-size: 14px 14px;
+  opacity: 0.07;
+  pointer-events: none;
+}
 .hero-overlay {
   position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(135deg, rgba(12,22,40,.65) 0%, rgba(12,22,40,.3) 100%);
@@ -326,6 +346,13 @@ nav.scrolled .logo-dark  { display: none; }
 .about-content p { font-size: clamp(.85rem, 1.4vw, .93rem); line-height: 1.95; color: var(--body); margin-bottom: 16px; }
 .about-sig { font-family: var(--serif); font-style: italic; font-size: 1.7rem; font-weight: 600; color: var(--amber); margin-top: 28px; }
 .about-sig-t { font-size: .62rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--mid); margin-top: 4px; }
+.about-people { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px,5vw,64px); margin-top: clamp(36px,5vw,52px); }
+.about-person { padding: clamp(24px,3.5vw,40px); background: var(--off-white); border-left: 3px solid var(--amber); }
+.about-person-name { font-family: var(--serif); font-size: clamp(1.2rem,2.2vw,1.6rem); font-weight: 700; color: var(--navy); margin-bottom: 4px; line-height: 1.2; }
+.about-person-role { font-size: .6rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--amber); margin-bottom: 20px; }
+.about-person p { font-size: clamp(.85rem,1.4vw,.93rem); line-height: 1.95; color: var(--body); margin-bottom: 14px; }
+.about-person p:last-child { margin-bottom: 0; }
+@media(max-width:760px){ .about-people{ grid-template-columns:1fr; } }
 
 /* ─────────────────────────────────────
    CONTACT
@@ -420,6 +447,7 @@ footer {
 <nav id="mainNav">
   <a href="./index.html" class="nav-logo" aria-label="Stonebridge Builders — Home">
     <img src="./logo-white.svg" alt="Stonebridge Builders" class="logo-white" height="38">
+    <img src="./logo-dark.svg"  alt="Stonebridge Builders" class="logo-dark"  height="38">
   </a>
   <ul class="nav-links" role="list">
     <li><a href="./services.html">Services</a></li>
@@ -434,6 +462,7 @@ footer {
 
 <!-- Mobile drawer -->
 <div class="nav-drawer" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu" aria-hidden="true">
+  <img src="./logo-icon-white.svg" alt="Stonebridge Builders" style="height:48px;width:auto;margin-bottom:8px;">
   <a href="./services.html" class="drawer-link">Services</a>
   <a href="./projects.html" class="drawer-link">Projects</a>
   <a href="./contact.html" class="drawer-link">Contact</a>
@@ -447,12 +476,13 @@ footer {
     <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1600/v1774834004/gs_house-1-gallery-2_up7mtg.jpg')"></div>
     <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1600/v1774832516/gs_house-5-7_slqc2v.jpg')"></div>
   </div>
+  <div class="hero-halftone"></div>
   <div class="hero-overlay" aria-hidden="true"></div>
   <div class="hero-content">
-    <span class="hero-tag">Est. 2009 &nbsp;·&nbsp; Licensed &nbsp;·&nbsp; Insured</span>
+    <span class="hero-tag">Est. 2015 &nbsp;·&nbsp; Licensed &nbsp;·&nbsp; Insured</span>
     <h1>Building with<br><em>Integrity.</em><br>Crafted to Last.</h1>
     <p class="hero-sub">Stonebridge Builders is a professional contracting company with a proven track record of quality construction across Pennsylvania, North Carolina, and Illinois.</p>
-    <a href="./contact.html" class="btn-primary">Start Your Project</a>
+    <a href="./services.html" class="btn-primary">Learn More</a>
   </div>
   <div class="hero-scroll" aria-hidden="true">
     <div class="scroll-bar"></div>
@@ -474,7 +504,7 @@ footer {
     <p>Whether you're building your dream home, renovating an existing space, or need reliable repair work, our experienced team delivers results you can count on — on time and within budget.</p>
     <div class="brand-divider"></div>
     <div class="brand-stats">
-      <div><div class="stat-n">87+</div><div class="stat-l">Projects Completed</div></div>
+      <div><div class="stat-n">52+</div><div class="stat-l">Projects Completed — Full builds, renovations &amp; home jobs</div></div>
       <div><div class="stat-n">15+</div><div class="stat-l">Years of Experience</div></div>
       <div><div class="stat-n">3</div><div class="stat-l">States Served</div></div>
     </div>
@@ -613,9 +643,9 @@ footer {
         </div>
       </div>
       <div class="review-text">
-        <p>When we set out to find a homebuilder, my wife and I realized we would be making the biggest financial investment decision of our lives. After meeting multiple builders, we chose Sean and Stonebridge — the only builder others in the industry spoke highly of by name.</p>
-        <p>Sean was available at any hour, never afraid to flag a problem early, and his attention to detail is something you can actually feel in the finished home. The process was flexible, communicative, and refreshingly honest.</p>
-        <p>Having completed our project in 2018, we now consider Sean a friend. We will forever be thankful we chose to build with Stonebridge Builders.</p>
+        <p>When we set out to find a homebuilder, my wife and I knew we were making the biggest financial decision of our lives. After meeting several builders, we chose Stonebridge. Sean Timmer was the only builder others in the industry spoke highly of by name, and that said everything.</p>
+        <p>Sean was reachable at any hour, never hesitated to flag a problem early, and his attention to detail is something you can feel in the finished home. The whole process was flexible, communicative, and refreshingly honest.</p>
+        <p>We finished our project in 2018 and we consider Sean a friend today. We are forever grateful we chose to build with Stonebridge Builders.</p>
       </div>
     </div>
 
@@ -630,9 +660,9 @@ footer {
         </div>
       </div>
       <div class="review-text">
-        <p>We have known Sean Timmer for 7 years. A friend recommended him when we were building a new house. Sean listened, spoke to us at our level, and made smart recommendations that proved right every time.</p>
-        <p>He's since worked with us on our house, detached garage, grocery store, deli, liquor store, and more. Sean is a hands-on guy who holds everyone to the standard he holds himself.</p>
-        <p>In a few words: Stonebridge is a quality operation — on time, on budget, fair, and honest. I'd recommend them for any job, large or small.</p>
+        <p>We have known Sean Timmer for seven years. A friend recommended him when we were building a new house and it turned out to be one of the best referrals we ever got. Sean listened to us, spoke to us at our level, and made smart recommendations that proved right every time.</p>
+        <p>Since then he has worked with us on our house, a detached garage, a grocery store, a deli, a liquor store, and more. Sean is hands-on and holds everyone around him to the standard he holds himself.</p>
+        <p>In a few words: Stonebridge is a quality operation. On time, on budget, fair, and honest. We would recommend them for any job, large or small.</p>
       </div>
     </div>
 
@@ -647,9 +677,9 @@ footer {
         </div>
       </div>
       <div class="review-text">
-        <p>We are so pleased with our new home that words can't fully explain it. The quality of the construction was only exceeded by the service Sean provided throughout the entire process.</p>
-        <p>From the initial walkthrough before we even purchased the land to the day we moved in, Sean was there for every question and concern. That kind of service is rare in today's world.</p>
-        <p>Thank you to the entire Stonebridge team for making our dream home a reality — we truly love it.</p>
+        <p>We are so pleased with our new home that words can barely capture it. The quality of the construction was only exceeded by the service Sean provided throughout the entire process.</p>
+        <p>From the initial walkthrough before we even purchased the land through to the day we moved in, Sean was there for every question and every concern. That kind of care is rare today.</p>
+        <p>Thank you to the entire Stonebridge team for making our dream home a reality. We truly love it.</p>
       </div>
     </div>
 
@@ -664,9 +694,9 @@ footer {
         </div>
       </div>
       <div class="review-text">
-        <p>We are very happy with how our house turned out thanks to Stonebridge. Our architect gave us Sean's name and just from talking to him I knew he was our builder.</p>
-        <p>The neighbors commented on how meticulous the crew was — always measuring, reminding me of "measure twice, cut once." We were kept up to date every step of the way.</p>
-        <p>Sean made smart aging-in-place suggestions at no extra cost. The crew was friendly, respectful, and cleaned up daily. We highly recommend Stonebridge Construction LLC.</p>
+        <p>We are very happy with how our house turned out and it comes down to Stonebridge. Our architect gave us Sean's name and from the first conversation I knew he was our builder.</p>
+        <p>The neighbors commented on how meticulous the crew was, always measuring and reminding me of "measure twice, cut once." We were kept up to date at every step of the way.</p>
+        <p>Sean made thoughtful aging-in-place suggestions at no extra cost. The crew was friendly, respectful, and cleaned up every day. We highly recommend Stonebridge Builders.</p>
       </div>
     </div>
 
@@ -675,21 +705,23 @@ footer {
 
 <!-- ══ ABOUT ══ -->
 <section class="about" id="about">
-  <div class="about-inner">
-    <div class="about-img-wrap reveal">
-      <img src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_900/v1774834004/gs_house-1-gallery-2_up7mtg.jpg"
-        alt="Stonebridge Builders at work" loading="lazy" decoding="async">
-      <div class="about-tag">PA · NC · IL &nbsp;·&nbsp; Est. 2009</div>
-    </div>
-    <div class="about-content">
-      <div class="eyebrow reveal"><div class="eyebrow-line"></div><span class="eyebrow-text">Our Story</span></div>
-      <h2 class="sec-title reveal d1">Rooted in craft.<br>Built on trust.</h2>
-      <p class="lead reveal d1">Stonebridge Builders was founded in 2009 by Sean Timmer, a builder who believed that exceptional results don't happen by accident — they happen by intention.</p>
-      <p class="reveal d2">After years in the industry, Sean built Stonebridge around what matters most: listening to the client, doing the job right, and standing behind every nail driven and every wall raised.</p>
-      <p class="reveal d2">We operate across Pennsylvania, North Carolina, and Illinois — taking on select projects each year so every client gets our full attention from first handshake to final walk-through.</p>
-      <div class="reveal d3">
-        <div class="about-sig">Sean Timmer</div>
-        <div class="about-sig-t">Founder &amp; Principal Builder</div>
+  <div class="about-inner" style="display:block;max-width:1240px;margin:0 auto;">
+    <div class="eyebrow reveal"><div class="eyebrow-line"></div><span class="eyebrow-text">Our Story</span></div>
+    <h2 class="sec-title reveal d1">Rooted in craft.<br>Built on trust.</h2>
+    <div class="about-people">
+      <div class="about-person reveal d1">
+        <div class="about-person-name">Marcus Brownlee</div>
+        <div class="about-person-role">Founder</div>
+        <p>Born in Scotland to a family of five children, Marcus Brownlee emigrated to the United States with his parents in 1979. He grew up immersed in the trades, the kind of work where precision matters and shortcuts are never acceptable. That upbringing shaped everything that followed.</p>
+        <p>Over a long career spanning general contracting, residential construction, and project management, Marcus built both a deep expertise and a clear set of values. In 2015, he channeled those years into founding Stonebridge Builders, a company designed from the start to treat every client's project with the same seriousness and care he would give his own.</p>
+        <p>Today Marcus oversees Stonebridge's strategic direction while staying close to the craft. He is settled with his wife and children and remains as committed to building right as he was on day one.</p>
+      </div>
+      <div class="about-person reveal d2">
+        <div class="about-person-name">Sean Timmer</div>
+        <div class="about-person-role">Co-Founder &amp; Head of Operations</div>
+        <p>Sean Timmer is a US native, born and raised in Illinois. Before joining Stonebridge, he completed two tours of duty with the US Army in Iraq under Operation Iraqi Freedom, an experience that shaped the discipline and attention to detail he brings to every project. He joined Marcus just four months after Stonebridge was founded in 2015, becoming a cornerstone of its early growth.</p>
+        <p>Today Sean serves as Co-Founder and Head of Operations and Client Relations. He is the primary point of contact for clients throughout the build process, from the first consultation through the final walk-through. Clients work directly with Sean, which means decisions get made quickly and nothing falls through the cracks.</p>
+        <p>Though his family is based in Illinois, Sean travels wherever Stonebridge's projects take him. Whether you're building in Pennsylvania, North Carolina, or Illinois, Sean is there.</p>
       </div>
     </div>
   </div>
@@ -703,14 +735,10 @@ footer {
       <h2 class="sec-title reveal d1">Let's build<br>something together</h2>
       <p class="reveal d2">We're currently accepting inquiries for new projects. Fill out the form and we'll follow up within one business day.</p>
       <div class="contact-details">
-        <div class="reveal d2">
-          <div class="c-label">Phone</div>
-          <div class="c-val"><a href="tel:+16175550182">(617) 555-0182</a></div>
-        </div>
         <div class="reveal d3">
           <div class="c-label">Email</div>
           <!-- Email written as HTML entities to prevent bot scraping -->
-          <div class="c-val"><a href="/cdn-cgi/l/email-protection#9ff7faf3f3f0b9bca9aba4ecebf0f1fafdedf6fbf8fafdeaf6f3fbfaedecb9bcaba9a4fcf0f2">hello&#64;stonebridgebuilders&#46;com</a></div>
+          <div class="c-val"><a href="mailto:marcusbrownlee&#64;thestonebridgeco&#46;com">marcusbrownlee&#64;thestonebridgeco&#46;com</a></div>
         </div>
         <div class="reveal d3">
           <div class="c-label">Service Area</div>
@@ -758,8 +786,8 @@ footer {
 <!-- ══ FOOTER ══ -->
 <footer>
   <div>
-    <img src="./logo-white.svg" alt="Stonebridge Builders" style="height:36px;width:auto;display:block;margin-bottom:14px;opacity:.9;">
-    <p class="footer-tagline">Professional general contractor.<br>Pennsylvania · North Carolina · Illinois<br>Est. 2009 · Licensed &amp; Insured.</p>
+    <img src="./logo-icon-white.svg" alt="Stonebridge Builders" style="height:40px;width:auto;display:block;margin-bottom:14px;opacity:.9;">
+    <p class="footer-tagline">Professional general contractor.<br>Pennsylvania · North Carolina · Illinois<br>Est. 2015 · Licensed &amp; Insured.</p>
   </div>
   <ul class="footer-nav" role="list">
     <li><a href="./services.html">Services</a></li>

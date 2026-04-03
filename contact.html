@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <title>Contact — Stonebridge Builders</title>
 <meta name="description" content="Get in touch with Stonebridge Builders. We serve Pennsylvania, North Carolina, and Illinois. Request a free estimate today.">
 <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
@@ -29,8 +30,8 @@
   --py: clamp(60px, 9vw, 112px);
 }
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body { background: var(--white); color: var(--text); font-family: var(--sans); font-weight: 400; overflow-x: hidden; line-height: 1.65; }
+html { scroll-behavior: smooth; font-size: 16px; overscroll-behavior: none; background: #1D3557; }
+body { background: var(--white); color: var(--text); font-family: var(--sans); font-weight: 400; overflow-x: hidden; line-height: 1.65; overscroll-behavior: none; }
 img { display: block; max-width: 100%; }
 a { text-decoration: none; color: inherit; }
 button { font-family: var(--sans); }
@@ -50,24 +51,26 @@ nav {
   position: sticky; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px var(--px);
-  background: var(--navy);
+  background: rgba(255,255,255,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 var(--border);
 }
 .nav-logo { z-index: 110; position: relative; display: flex; align-items: center; }
 .nav-logo img { height: 38px; width: auto; display: block; }
 .nav-links { display: flex; gap: clamp(18px, 2.5vw, 36px); list-style: none; }
 .nav-links a {
   font-size: .75rem; font-weight: 500; letter-spacing: .1em;
-  text-transform: uppercase; color: rgba(255,255,255,.8);
+  text-transform: uppercase; color: var(--body);
   transition: color .25s; border-bottom: 1px solid transparent; padding-bottom: 2px;
 }
-.nav-links a:hover, .nav-links a.active { color: #fff; border-color: rgba(255,255,255,.5); }
+.nav-links a:hover, .nav-links a.active { color: var(--navy); border-color: var(--navy); }
 .hamburger {
   display: none; flex-direction: column; justify-content: center; gap: 5px;
   width: 34px; height: 34px; background: none; border: none; cursor: pointer;
   z-index: 110; padding: 2px;
 }
 .hamburger span {
-  display: block; height: 2px; border-radius: 2px; background: #fff;
+  display: block; height: 2px; border-radius: 2px; background: var(--navy);
   transition: transform .35s, opacity .3s; transform-origin: center;
 }
 .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -231,7 +234,7 @@ footer {
 <!-- ══ NAV ══ -->
 <nav id="mainNav">
   <a href="./index.html" class="nav-logo">
-    <img src="./logo-white.svg" alt="Stonebridge Builders">
+    <img src="./logo-dark.svg" alt="Stonebridge Builders">
   </a>
   <ul class="nav-links" role="list">
     <li><a href="./services.html">Services</a></li>
@@ -244,6 +247,7 @@ footer {
   </button>
 </nav>
 <div class="nav-drawer" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
+  <img src="./logo-icon-white.svg" alt="Stonebridge Builders" style="height:48px;width:auto;margin-bottom:8px;">
   <a href="./services.html" class="drawer-link">Services</a>
   <a href="./projects.html" class="drawer-link">Projects</a>
   <a href="./contact.html" class="drawer-link">Contact</a>
@@ -271,12 +275,8 @@ footer {
 
     <div class="contact-details reveal d2">
       <div class="c-detail">
-        <div class="c-label">Phone</div>
-        <div class="c-val"><a href="tel:+16175550182">(617) 555-0182</a></div>
-      </div>
-      <div class="c-detail">
         <div class="c-label">Email</div>
-        <div class="c-val"><a href="mailto:hello&#64;stonebridgebuilders&#46;com">hello&#64;stonebridgebuilders&#46;com</a></div>
+        <div class="c-val"><a href="mailto:marcusbrownlee&#64;thestonebridgeco&#46;com">marcusbrownlee&#64;thestonebridgeco&#46;com</a></div>
       </div>
       <div class="c-detail">
         <div class="c-label">Service Area</div>
@@ -392,15 +392,15 @@ footer {
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
     </div>
     <div class="cbf-title">15+ Years of Experience</div>
-    <div class="cbf-text">Since 2009, we've completed 87+ projects and built a reputation for quality that speaks for itself.</div>
+    <div class="cbf-text">Since 2015, we've completed 52+ projects and built a reputation for quality that speaks for itself.</div>
   </div>
 </div>
 
 <!-- ══ FOOTER ══ -->
 <footer>
   <div>
-    <img src="./logo-white.svg" alt="Stonebridge Builders" class="footer-logo-img">
-    <p class="footer-tagline">Professional general contractor.<br>Pennsylvania · North Carolina · Illinois<br>Est. 2009 · Licensed &amp; Insured.</p>
+    <img src="./logo-icon-white.svg" alt="Stonebridge Builders" class="footer-logo-img" style="height:40px;width:auto;">
+    <p class="footer-tagline">Professional general contractor.<br>Pennsylvania · North Carolina · Illinois<br>Est. 2015 · Licensed &amp; Insured.</p>
   </div>
   <ul class="footer-nav" role="list">
     <li><a href="./services.html">Services</a></li>

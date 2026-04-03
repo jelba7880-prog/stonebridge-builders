@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <title>Black Stone Ridge — Stonebridge Builders</title>
 <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,17 +12,17 @@
 <style>
 :root{--navy:#1D3557;--navy-dark:#142640;--navy-light:#2A4A6A;--amber:#C49128;--amber-h:#A87A1E;--white:#FFFFFF;--off-white:#F6F5F2;--cream:#EFECE6;--border:#DEDBD4;--text:#111111;--body:#383838;--mid:#646464;--serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',system-ui,-apple-system,sans-serif;--px:clamp(20px,5.5vw,72px);}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;font-size:16px;}
-body{background:var(--white);color:var(--text);font-family:var(--sans);font-weight:400;overflow-x:hidden;line-height:1.65;}
+html{scroll-behavior:smooth;font-size:16px;overscroll-behavior:none;background:#1D3557;}
+body{background:var(--white);color:var(--text);font-family:var(--sans);font-weight:400;overflow-x:hidden;line-height:1.65;overscroll-behavior:none;}
 img{display:block;max-width:100%;}
 a{text-decoration:none;color:inherit;}
-nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:14px var(--px);background:var(--navy);}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:14px var(--px);background:rgba(255,255,255,.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--border);}
 .nav-logo{font-family:var(--serif);font-size:clamp(1rem,2vw,1.3rem);font-weight:700;color:var(--navy);z-index:110;position:relative;}
 .nav-links{display:flex;gap:clamp(18px,2.5vw,36px);list-style:none;}
-.nav-links a{font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8);transition:color .25s;border-bottom:1px solid transparent;padding-bottom:2px;}
-.nav-links a:hover,.nav-links a.active{color:#fff;border-color:rgba(255,255,255,.5);}
+.nav-links a{font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--body);transition:color .25s;border-bottom:1px solid transparent;padding-bottom:2px;}
+.nav-links a:hover,.nav-links a.active{color:var(--navy);border-color:var(--navy);}
 .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:34px;height:34px;background:none;border:none;cursor:pointer;z-index:110;padding:2px;}
-.hamburger span{display:block;height:2px;border-radius:2px;background:#fff;transition:transform .35s,opacity .3s;transform-origin:center;}
+.hamburger span{display:block;height:2px;border-radius:2px;background:var(--navy);transition:transform .35s,opacity .3s;transform-origin:center;}
 .hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
 .hamburger[aria-expanded="true"] span:nth-child(2){opacity:0;}
 .hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
@@ -71,7 +72,7 @@ footer{background:var(--navy-dark);padding:clamp(40px,6vw,60px) var(--px) clamp(
 <body>
 <nav>
   <a href="./index.html" class="nav-logo">
-    <img src="./logo-white.svg" alt="Stonebridge Builders" height="38">
+    <img src="./logo-dark.svg" alt="Stonebridge Builders" height="38">
   </a>
   <ul class="nav-links" role="list">
     <li><a href="./services.html">Services</a></li>
@@ -81,6 +82,7 @@ footer{background:var(--navy-dark);padding:clamp(40px,6vw,60px) var(--px) clamp(
   <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open navigation menu"><span></span><span></span><span></span></button>
 </nav>
 <div class="nav-drawer" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu" aria-hidden="true">
+  <img src="./logo-icon-white.svg" alt="Stonebridge Builders" style="height:48px;width:auto;margin-bottom:8px;">
   <a href="./services.html" class="drawer-link">Services</a>
   <a href="./projects.html" class="drawer-link">Projects</a>
   <a href="./contact.html" class="drawer-link">Contact</a>
@@ -138,7 +140,7 @@ footer{background:var(--navy-dark);padding:clamp(40px,6vw,60px) var(--px) clamp(
 </div>
 
 <footer>
-  <div><img src="./logo-white.svg" alt="Stonebridge Builders" style="height:36px;width:auto;display:block;margin-bottom:14px;opacity:.9;"><p class="footer-tagline">Professional general contractor.<br>Pennsylvania · North Carolina · Illinois<br>Est. 2009 · Licensed &amp; Insured.</p></div>
+  <div><img src="./logo-icon-white.svg" alt="Stonebridge Builders" style="height:40px;width:auto;display:block;margin-bottom:14px;opacity:.9;"><p class="footer-tagline">Professional general contractor.<br>Pennsylvania · North Carolina · Illinois<br>Est. 2015 · Licensed &amp; Insured.</p></div>
   <ul class="footer-nav" role="list"><li><a href="./services.html">Services</a></li><li><a href="./projects.html">Projects</a></li><li><a href="./contact.html">Contact</a></li></ul>
   <p class="footer-copy">&copy; 2025 Stonebridge Builders LLC</p>
 </footer>
