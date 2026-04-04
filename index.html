@@ -72,11 +72,11 @@ nav {
   transition: background .35s, padding .35s, box-shadow .35s;
 }
 nav.scrolled {
-  background: rgba(255,255,255,.97);
+  background: rgba(29,53,87,.97);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   padding: 13px var(--px);
-  box-shadow: 0 1px 0 var(--border);
+  box-shadow: 0 1px 0 rgba(255,255,255,.1);
 }
 .nav-logo {
   font-family: var(--serif); font-size: clamp(1rem, 2vw, 1.3rem);
@@ -84,11 +84,8 @@ nav.scrolled {
   z-index: 110; position: relative; transition: color .3s;
   display: flex; align-items: center; gap: 10px;
 }
-nav.scrolled .nav-logo { color: var(--navy); }
 .logo-white { display: block; }
 .logo-dark  { display: none; }
-nav.scrolled .logo-white { display: none; }
-nav.scrolled .logo-dark  { display: block; }
 
 .nav-links { display: flex; gap: clamp(18px, 2.5vw, 36px); list-style: none; }
 .nav-links a {
@@ -97,8 +94,6 @@ nav.scrolled .logo-dark  { display: block; }
   transition: color .25s; border-bottom: 1px solid transparent; padding-bottom: 2px;
 }
 .nav-links a:hover { color: #fff; border-color: rgba(255,255,255,.5); }
-nav.scrolled .nav-links a { color: var(--body); }
-nav.scrolled .nav-links a:hover { color: var(--navy); border-color: var(--navy); }
 
 /* ─────────────────────────────────────
    HAMBURGER
@@ -116,7 +111,7 @@ nav.scrolled .nav-links a:hover { color: var(--navy); border-color: var(--navy);
 .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--navy) !important; }
 .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--navy) !important; }
-nav.scrolled .hamburger span { background: var(--navy); }
+nav.scrolled .hamburger span { background: #fff; }
 
 /* ─────────────────────────────────────
    MOBILE DRAWER
@@ -149,7 +144,7 @@ nav.scrolled .hamburger span { background: var(--navy); }
   opacity: 0; transition: opacity 1.4s ease;
 }
 .hero-slide { transform: scale(1.15); }
-.hero-slide.active { opacity: 1; animation: kenBurns 10s ease-out forwards; }
+.hero-slide.active { opacity: 1; animation: kenBurns 8s ease-out forwards; }
 @keyframes kenBurns {
   from { transform: scale(1.15); }
   to   { transform: scale(1.0); }
@@ -738,7 +733,7 @@ footer {
         <div class="reveal d3">
           <div class="c-label">Email</div>
           <!-- Email written as HTML entities to prevent bot scraping -->
-          <div class="c-val"><a href="mailto:marcusbrownlee&#64;thestonebridgeco&#46;com">marcusbrownlee&#64;thestonebridgeco&#46;com</a></div>
+          <div class="c-val"><a href="mailto:seantimmer&#64;thestonebridgeco&#46;com">seantimmer&#64;thestonebridgeco&#46;com</a></div>
         </div>
         <div class="reveal d3">
           <div class="c-label">Service Area</div>
@@ -812,8 +807,11 @@ document.body.classList.add('js-ready');
   setInterval(function () {
     slides[cur].classList.remove('active');
     cur = (cur + 1) % slides.length;
-    slides[cur].classList.add('active');
-  }, 10000);
+    var next = slides[cur];
+    next.classList.remove('active');
+    void next.offsetWidth; /* force reflow so animation restarts */
+    next.classList.add('active');
+  }, 8000);
 }());
 
 /* ── Nav: add .scrolled class when user scrolls down ── */
