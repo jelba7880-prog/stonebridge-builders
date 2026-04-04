@@ -154,10 +154,10 @@ nav.scrolled .hamburger span { background: #fff; }
   .hero-slide.active { animation: none; }
 }
 .hero-halftone {
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; z-index: 10;
   background-image: radial-gradient(circle, rgba(255,255,255,1) 1px, transparent 1px);
   background-size: 14px 14px;
-  opacity: 0.07;
+  opacity: 0.13;
   pointer-events: none;
 }
 .hero-overlay {
@@ -472,8 +472,8 @@ footer {
     <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1600/v1774840519/62496283_2264671853582426_579849533039575040_n_lqcnh1.jpg')"></div>
     <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1600/v1774834004/gs_house-1-gallery-2_up7mtg.jpg')"></div>
     <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1600/v1774832516/gs_house-5-7_slqc2v.jpg')"></div>
+    <div class="hero-halftone"></div>
   </div>
-  <div class="hero-halftone"></div>
   <div class="hero-overlay" aria-hidden="true"></div>
   <div class="hero-content">
     <span class="hero-tag">Est. 2015 &nbsp;·&nbsp; Licensed &nbsp;·&nbsp; Insured</span>
