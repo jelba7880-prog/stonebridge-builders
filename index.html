@@ -418,7 +418,9 @@ footer {
 @media (max-width: 580px) {
   nav { padding: 18px 20px; }
   nav.scrolled { padding: 12px 20px; }
-  .hero { padding: 0 20px clamp(48px, 12vw, 72px); }
+  .hero { min-height: 70vh; padding: 0 20px clamp(48px, 12vw, 72px); align-items: flex-end; padding-bottom: clamp(52px,12vw,80px); }
+  .hero-slide { transform: scale(1.05); }
+  @keyframes kenBurns { from { transform: scale(1.05); } to { transform: scale(1.0); } }
   .brand, .services, .projects-preview, .reviews, .about, .contact {
     padding-top: clamp(52px, 12vw, 80px);
     padding-bottom: clamp(52px, 12vw, 80px);
