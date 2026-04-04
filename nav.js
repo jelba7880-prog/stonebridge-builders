@@ -37,11 +37,23 @@
     }
   });
 
-  /* Transparent nav scroll — only active on pages with data-transparent nav */
+  /* Transparent nav — turns solid when "Who We Are" section hits the top.
+     Falls back to scroll offset if the section isn't found.
+     Only active on pages with data-transparent nav. */
   var nav = document.getElementById('mainNav');
   if (nav && nav.hasAttribute('data-transparent')) {
-    window.addEventListener('scroll', function () {
-      nav.classList.toggle('scrolled', window.scrollY > 55);
-    }, { passive: true });
+    var trigger = document.getElementById('brand');
+    if (trigger && 'IntersectionObserver' in window) {
+      var navObs = new IntersectionObserver(function (entries) {
+        /* scrolled = true when the brand section is no longer intersecting
+           from the top (i.e. its top edge has passed the viewport top) */
+        nav.classList.toggle('scrolled', !entries[0].isIntersecting);
+      }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
+      navObs.observe(trigger);
+    } else {
+      window.addEventListener('scroll', function () {
+        nav.classList.toggle('scrolled', window.scrollY > 55);
+      }, { passive: true });
+    }
   }
 }());
