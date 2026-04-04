@@ -23,6 +23,12 @@
   }
 
   ham.addEventListener('click', function () {
+    /* Watery morph animation — restart each click */
+    ham.classList.remove('is-animating');
+    void ham.offsetWidth;
+    ham.classList.add('is-animating');
+    setTimeout(function () { ham.classList.remove('is-animating'); }, 620);
+
     ham.getAttribute('aria-expanded') === 'false' ? openDrawer() : closeDrawer();
   });
 

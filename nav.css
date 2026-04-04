@@ -26,7 +26,7 @@
 
 /* ── NAV BASE (sticky white — interior pages) ── */
 nav {
-  position: sticky; top: 0; z-index: 100;
+  position: sticky; top: 0; z-index: 160;
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px var(--px);
   background: rgba(255,255,255,.97);
@@ -37,7 +37,7 @@ nav {
 
 /* ── NAV TRANSPARENT VARIANT (homepage — fixed, starts clear) ── */
 nav[data-transparent] {
-  position: fixed; left: 0; right: 0;
+  position: fixed; left: 0; right: 0; z-index: 160;
   background: transparent;
   box-shadow: none;
   padding: 22px var(--px);
@@ -83,42 +83,52 @@ nav[data-transparent] .nav-links a.active { color: #fff; border-color: rgba(255,
   transition: transform .2s;
 }
 .hamburger:active { transform: scale(.9); }
+
+/* Watery morph animation — fires on every open/close click */
+@keyframes hamWater {
+  0%   { filter: blur(0);     transform: scale(1); }
+  22%  { filter: blur(2.8px); transform: scale(1.08); }
+  55%  { filter: blur(1.2px); transform: scale(0.95); }
+  78%  { filter: blur(.4px);  transform: scale(1.02); }
+  100% { filter: blur(0);     transform: scale(1); }
+}
+.hamburger.is-animating { animation: hamWater .58s cubic-bezier(.22,1,.36,1); }
+
 .hamburger span {
   display: block; height: 2px; border-radius: 2px;
   background: var(--navy);
-  transition: transform .45s cubic-bezier(.22,1,.36,1),
-              opacity   .3s ease,
+  transition: transform .52s cubic-bezier(.34,1.56,.64,1),
+              opacity   .32s ease,
               background .3s ease;
   transform-origin: center;
 }
 nav[data-transparent] .hamburger span { background: #fff; }
 
 /* Animate bars → X */
-.hamburger[aria-expanded="true"] span                  { background: #fff; }
+/* Interior pages: white nav → X stays navy */
+.hamburger[aria-expanded="true"] span                  { background: var(--navy); }
+/* Homepage: nav is transparent/navy → X turns white */
+nav[data-transparent] .hamburger[aria-expanded="true"] span { background: #fff; }
 .hamburger[aria-expanded="true"] span:nth-child(1)     { transform: translateY(7px) rotate(45deg); }
 .hamburger[aria-expanded="true"] span:nth-child(2)     { opacity: 0; transform: scaleX(0); }
 .hamburger[aria-expanded="true"] span:nth-child(3)     { transform: translateY(-7px) rotate(-45deg); }
 
 /* ── MOBILE DRAWER ── */
 .nav-drawer {
-  position: fixed; inset: 0; z-index: 150;
+  position: fixed; inset: 0; z-index: 145;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   background: var(--navy);
-  /* hidden state */
-  opacity: 0;
+  /* hidden — slides off to the right */
   visibility: hidden;
-  clip-path: circle(0% at calc(100% - 40px) 40px);
-  transition:
-    clip-path .6s cubic-bezier(.22,1,.36,1),
-    opacity   .35s ease,
-    visibility .6s;
+  transform: translateX(100%);
+  transition: transform .55s cubic-bezier(.22,1,.36,1),
+              visibility .55s;
   pointer-events: none;
 }
 .nav-drawer.is-open {
-  opacity: 1;
   visibility: visible;
-  clip-path: circle(150% at calc(100% - 40px) 40px);
+  transform: translateX(0);
   pointer-events: all;
 }
 
@@ -132,7 +142,7 @@ nav[data-transparent] .hamburger span { background: #fff; }
 }
 .nav-drawer.is-open .nav-drawer-logo { opacity: .9; transform: none; }
 
-/* Drawer links */
+/* Drawer links — slide in from right with stagger */
 .drawer-link {
   display: block;
   font-family: var(--serif);
@@ -142,17 +152,39 @@ nav[data-transparent] .hamburger span { background: #fff; }
   letter-spacing: .01em;
   padding: 10px 0;
   opacity: 0;
-  transform: translateX(32px);
+  transform: translateX(60px);
   transition: color .25s ease,
-              opacity .4s ease,
-              transform .45s cubic-bezier(.22,1,.36,1);
+              opacity .45s ease,
+              transform .5s cubic-bezier(.22,1,.36,1);
 }
 .drawer-link:hover { color: var(--amber); }
 
-.nav-drawer.is-open .drawer-link { opacity: 1; transform: none; }
-.nav-drawer.is-open a.drawer-link:nth-of-type(1) { transition-delay: .28s; }
-.nav-drawer.is-open a.drawer-link:nth-of-type(2) { transition-delay: .36s; }
-.nav-drawer.is-open a.drawer-link:nth-of-type(3) { transition-delay: .44s; }
+.nav-drawer.is-open .drawer-link { opacity: 1; transform: translateX(0); }
+.nav-drawer.is-open a.drawer-link:nth-of-type(1) { transition-delay: .22s; }
+.nav-drawer.is-open a.drawer-link:nth-of-type(2) { transition-delay: .32s; }
+.nav-drawer.is-open a.drawer-link:nth-of-type(3) { transition-delay: .42s; }
+
+/* Drawer footer details */
+.drawer-details {
+  margin-top: 40px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .4s .52s ease, transform .4s .52s ease;
+}
+.nav-drawer.is-open .drawer-details { opacity: 1; transform: none; }
+.drawer-details-email {
+  font-size: .75rem; color: rgba(255,255,255,.45);
+  letter-spacing: .06em; margin-bottom: 8px; display: block;
+}
+.drawer-details-area {
+  font-size: .6rem; font-weight: 500; letter-spacing: .18em;
+  text-transform: uppercase; color: rgba(255,255,255,.25);
+}
+.drawer-copy {
+  font-size: .56rem; color: rgba(255,255,255,.18);
+  letter-spacing: .1em; margin-top: 18px; display: block;
+}
 
 /* ── RESPONSIVE BREAKPOINTS ── */
 @media (max-width: 900px) {
@@ -163,4 +195,11 @@ nav[data-transparent] .hamburger span { background: #fff; }
   nav                          { padding: 14px 20px; }
   nav[data-transparent]        { padding: 18px 20px; }
   nav[data-transparent].scrolled { padding: 12px 20px; }
+  /* Scale all button-style elements for mobile readability */
+  .btn-primary, .btn-submit {
+    font-size: .66rem !important;
+    padding: 11px 24px !important;
+    letter-spacing: .1em !important;
+  }
+  .btn-submit { width: 100% !important; }
 }
