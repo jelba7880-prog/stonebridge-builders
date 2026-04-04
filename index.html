@@ -10,30 +10,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./nav.css">
 
 <style>
-/* ─────────────────────────────────────
-   DESIGN TOKENS
-───────────────────────────────────── */
-:root {
-  --navy:      #1D3557;
-  --navy-dark: #142640;
-  --navy-lt:   #2A4A6A;
-  --amber:     #C49128;
-  --amber-h:   #A87A1E;
-  --white:     #FFFFFF;
-  --off-white: #F6F5F2;
-  --cream:     #EFECE6;
-  --border:    #DEDBD4;
-  --text:      #111111;
-  --body:      #383838;
-  --mid:       #646464;
-  --serif: 'Playfair Display', Georgia, serif;
-  --sans:  'DM Sans', system-ui, -apple-system, sans-serif;
-  --px: clamp(20px, 5.5vw, 72px);
-  --py: clamp(60px, 9vw, 112px);
-}
-
 /* ─────────────────────────────────────
    RESET
 ───────────────────────────────────── */
@@ -61,73 +40,6 @@ body.js-ready .reveal.visible { opacity: 1; transform: none; }
 body.js-ready .d1 { transition-delay: .1s; }
 body.js-ready .d2 { transition-delay: .2s; }
 body.js-ready .d3 { transition-delay: .3s; }
-
-/* ─────────────────────────────────────
-   NAVIGATION
-───────────────────────────────────── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 22px var(--px);
-  transition: background .35s, padding .35s, box-shadow .35s;
-}
-nav.scrolled {
-  background: rgba(29,53,87,.97);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  padding: 13px var(--px);
-  box-shadow: 0 1px 0 rgba(255,255,255,.1);
-}
-.nav-logo {
-  font-family: var(--serif); font-size: clamp(1rem, 2vw, 1.3rem);
-  font-weight: 700; color: #fff; letter-spacing: .02em;
-  z-index: 110; position: relative; transition: color .3s;
-  display: flex; align-items: center; gap: 10px;
-}
-.logo-white { display: block; }
-.logo-dark  { display: none; }
-
-.nav-links { display: flex; gap: clamp(18px, 2.5vw, 36px); list-style: none; }
-.nav-links a {
-  font-size: .75rem; font-weight: 500; letter-spacing: .1em;
-  text-transform: uppercase; color: rgba(255,255,255,.85);
-  transition: color .25s; border-bottom: 1px solid transparent; padding-bottom: 2px;
-}
-.nav-links a:hover { color: #fff; border-color: rgba(255,255,255,.5); }
-
-/* ─────────────────────────────────────
-   HAMBURGER
-───────────────────────────────────── */
-.hamburger {
-  display: none; flex-direction: column; justify-content: center; gap: 5px;
-  width: 34px; height: 34px; background: none; border: none; cursor: pointer;
-  z-index: 110; position: relative; padding: 2px;
-}
-.hamburger span {
-  display: block; height: 2px; border-radius: 2px; background: #fff;
-  transition: background .3s, transform .35s, opacity .3s;
-  transform-origin: center;
-}
-.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--navy) !important; }
-.hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--navy) !important; }
-nav.scrolled .hamburger span { background: #fff; }
-
-/* ─────────────────────────────────────
-   MOBILE DRAWER
-───────────────────────────────────── */
-.nav-drawer {
-  display: none; position: fixed; inset: 0; z-index: 90;
-  background: #fff; flex-direction: column;
-  align-items: center; justify-content: center; gap: 28px;
-  opacity: 0; pointer-events: none; transition: opacity .3s;
-}
-.nav-drawer.is-open { display: flex; opacity: 1; pointer-events: all; }
-.nav-drawer a {
-  font-family: var(--serif); font-size: clamp(1.8rem, 7vw, 2.6rem);
-  font-weight: 700; color: var(--navy); letter-spacing: .02em; transition: color .25s;
-}
-.nav-drawer a:hover { color: var(--amber); }
 
 /* ─────────────────────────────────────
    HERO
@@ -401,8 +313,6 @@ footer {
    RESPONSIVE — TABLET
 ───────────────────────────────────── */
 @media (max-width: 900px) {
-  .nav-links { display: none; }
-  .hamburger { display: flex; }
   .hero-scroll { display: none; }
   .brand { grid-template-columns: 1fr; gap: 44px; }
   .services-grid { grid-template-columns: 1fr; }
@@ -416,8 +326,6 @@ footer {
    RESPONSIVE — MOBILE
 ───────────────────────────────────── */
 @media (max-width: 580px) {
-  nav { padding: 18px 20px; }
-  nav.scrolled { padding: 12px 20px; }
   .hero { min-height: 70vh; padding: 0 20px clamp(48px, 12vw, 72px); align-items: flex-end; padding-bottom: clamp(52px,12vw,80px); }
   .hero-slide { transform: scale(1.05); }
   @keyframes kenBurns { from { transform: scale(1.05); } to { transform: scale(1.0); } }
@@ -441,7 +349,7 @@ footer {
 <body>
 
 <!-- ══ NAV ══ -->
-<nav id="mainNav">
+<nav id="mainNav" data-transparent>
   <a href="./index.html" class="nav-logo" aria-label="Stonebridge Builders — Home">
     <img src="./logo-white.svg" alt="Stonebridge Builders" class="logo-white" height="38">
     <img src="./logo-dark.svg"  alt="Stonebridge Builders" class="logo-dark"  height="38">
@@ -459,7 +367,7 @@ footer {
 
 <!-- Mobile drawer -->
 <div class="nav-drawer" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu" aria-hidden="true">
-  <img src="./logo-icon-white.svg" alt="Stonebridge Builders" style="height:48px;width:auto;margin-bottom:8px;">
+  <img src="./logo-icon-white.svg" alt="Stonebridge Builders" class="nav-drawer-logo">
   <a href="./services.html" class="drawer-link">Services</a>
   <a href="./projects.html" class="drawer-link">Projects</a>
   <a href="./contact.html" class="drawer-link">Contact</a>
@@ -794,6 +702,7 @@ footer {
   <p class="footer-copy">&copy; 2025 Stonebridge Builders LLC</p>
 </footer>
 
+<script src="./nav.js"></script>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── Step 1: Tell CSS that JS is running — unlocks scroll animations ── */
 document.body.classList.add('js-ready');
@@ -815,39 +724,6 @@ document.body.classList.add('js-ready');
     next.classList.add('active');
   }, 8000);
 }());
-
-/* ── Nav: add .scrolled class when user scrolls down ── */
-var nav = document.getElementById('mainNav');
-window.addEventListener('scroll', function () {
-  nav.classList.toggle('scrolled', window.scrollY > 55);
-}, { passive: true });
-
-/* ── Mobile drawer ── */
-var ham = document.getElementById('hamburger');
-var drawer = document.getElementById('mobileMenu');
-var drawerLinks = drawer.querySelectorAll('.drawer-link');
-
-function openDrawer() {
-  ham.setAttribute('aria-expanded', 'true');
-  drawer.setAttribute('aria-hidden', 'false');
-  drawer.classList.add('is-open');
-  document.body.style.overflow = 'hidden';
-  if (drawerLinks[0]) drawerLinks[0].focus();
-}
-function closeDrawer() {
-  ham.setAttribute('aria-expanded', 'false');
-  drawer.setAttribute('aria-hidden', 'true');
-  drawer.classList.remove('is-open');
-  document.body.style.overflow = '';
-  ham.focus();
-}
-ham.addEventListener('click', function () {
-  ham.getAttribute('aria-expanded') === 'false' ? openDrawer() : closeDrawer();
-});
-drawerLinks.forEach(function (l) { l.addEventListener('click', closeDrawer); });
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape' && ham.getAttribute('aria-expanded') === 'true') closeDrawer();
-});
 
 /* ── Scroll reveal (IntersectionObserver) ── */
 if ('IntersectionObserver' in window) {

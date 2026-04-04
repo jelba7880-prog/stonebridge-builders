@@ -10,25 +10,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./nav.css">
 <style>
-:root {
-  --navy:      #1D3557;
-  --navy-dark: #142640;
-  --navy-lt:   #2A4A6A;
-  --amber:     #C49128;
-  --amber-h:   #A87A1E;
-  --white:     #FFFFFF;
-  --off-white: #F6F5F2;
-  --cream:     #EFECE6;
-  --border:    #DEDBD4;
-  --text:      #111111;
-  --body:      #383838;
-  --mid:       #646464;
-  --serif: 'Playfair Display', Georgia, serif;
-  --sans:  'DM Sans', system-ui, -apple-system, sans-serif;
-  --px: clamp(20px, 5.5vw, 72px);
-  --py: clamp(60px, 9vw, 112px);
-}
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; font-size: 16px; overscroll-behavior: none; background: #1D3557; }
 body { background: var(--white); color: var(--text); font-family: var(--sans); font-weight: 400; overflow-x: hidden; line-height: 1.65; overscroll-behavior: none; }
@@ -45,49 +28,6 @@ body.js-ready .reveal.visible { opacity: 1; transform: none; }
 body.js-ready .d1 { transition-delay: .1s; }
 body.js-ready .d2 { transition-delay: .2s; }
 body.js-ready .d3 { transition-delay: .3s; }
-
-/* ── NAV ── */
-nav {
-  position: sticky; top: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px var(--px);
-  background: rgba(255,255,255,.97);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 1px 0 var(--border);
-}
-.nav-logo { z-index: 110; position: relative; display: flex; align-items: center; }
-.nav-logo img { height: 38px; width: auto; display: block; }
-.nav-links { display: flex; gap: clamp(18px, 2.5vw, 36px); list-style: none; }
-.nav-links a {
-  font-size: .75rem; font-weight: 500; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--body);
-  transition: color .25s; border-bottom: 1px solid transparent; padding-bottom: 2px;
-}
-.nav-links a:hover, .nav-links a.active { color: var(--navy); border-color: var(--navy); }
-.hamburger {
-  display: none; flex-direction: column; justify-content: center; gap: 5px;
-  width: 34px; height: 34px; background: none; border: none; cursor: pointer;
-  z-index: 110; padding: 2px;
-}
-.hamburger span {
-  display: block; height: 2px; border-radius: 2px; background: var(--navy);
-  transition: transform .35s, opacity .3s; transform-origin: center;
-}
-.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-.nav-drawer {
-  display: none; position: fixed; inset: 0; z-index: 90;
-  background: #fff; flex-direction: column;
-  align-items: center; justify-content: center; gap: 28px;
-  opacity: 0; pointer-events: none; transition: opacity .3s;
-}
-.nav-drawer.is-open { display: flex; opacity: 1; pointer-events: all; }
-.nav-drawer a {
-  font-family: var(--serif); font-size: clamp(1.8rem, 7vw, 2.6rem);
-  font-weight: 700; color: var(--navy); letter-spacing: .02em; transition: color .25s;
-}
-.nav-drawer a:hover { color: var(--amber); }
 
 /* ── PAGE HERO ── */
 .page-hero {
@@ -212,8 +152,6 @@ footer {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
-  .nav-links { display: none; }
-  .hamburger { display: flex; }
   .contact-wrap { grid-template-columns: 1fr; }
   .contact-sidebar { padding: clamp(40px, 8vw, 64px) var(--px); }
   .contact-form-side { padding: clamp(40px, 8vw, 64px) var(--px); }
@@ -221,7 +159,6 @@ footer {
   .footer-copy { align-self: auto; }
 }
 @media (max-width: 580px) {
-  nav { padding: 14px 20px; }
   .page-hero, .contact-bottom-band { padding-left: 20px; padding-right: 20px; }
   .contact-sidebar, .contact-form-side { padding-left: 20px; padding-right: 20px; }
   .form-row { grid-template-columns: 1fr; }
@@ -247,7 +184,7 @@ footer {
   </button>
 </nav>
 <div class="nav-drawer" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
-  <img src="./logo-icon-white.svg" alt="Stonebridge Builders" style="height:48px;width:auto;margin-bottom:8px;">
+  <img src="./logo-icon-white.svg" alt="Stonebridge Builders" class="nav-drawer-logo">
   <a href="./services.html" class="drawer-link">Services</a>
   <a href="./projects.html" class="drawer-link">Projects</a>
   <a href="./contact.html" class="drawer-link">Contact</a>
@@ -412,14 +349,6 @@ footer {
 
 <script>
 document.body.classList.add('js-ready');
-var ham = document.getElementById('hamburger');
-var drawer = document.getElementById('mobileMenu');
-var dlinks = drawer.querySelectorAll('.drawer-link');
-function openD() { ham.setAttribute('aria-expanded','true'); drawer.setAttribute('aria-hidden','false'); drawer.classList.add('is-open'); document.body.style.overflow='hidden'; if(dlinks[0]) dlinks[0].focus(); }
-function closeD() { ham.setAttribute('aria-expanded','false'); drawer.setAttribute('aria-hidden','true'); drawer.classList.remove('is-open'); document.body.style.overflow=''; ham.focus(); }
-ham.addEventListener('click', function() { ham.getAttribute('aria-expanded')==='false' ? openD() : closeD(); });
-dlinks.forEach(function(l) { l.addEventListener('click', closeD); });
-document.addEventListener('keydown', function(e) { if(e.key==='Escape' && ham.getAttribute('aria-expanded')==='true') closeD(); });
 if ('IntersectionObserver' in window) {
   var ro = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) { if(e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
@@ -427,5 +356,6 @@ if ('IntersectionObserver' in window) {
   document.querySelectorAll('.reveal').forEach(function(el) { ro.observe(el); });
 }
 </script>
+<script src="./nav.js"></script>
 </body>
 </html>
