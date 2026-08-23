@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<title>Project — Stonebridge Builders</title>
+<link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./nav.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;overscroll-behavior:none;background:#1D3557;}
+body{background:var(--white);color:var(--text);font-family:var(--sans);font-weight:400;overflow-x:hidden;line-height:1.65;overscroll-behavior:none;}
+img{display:block;max-width:100%;}
+a{text-decoration:none;color:inherit;}
+.proj-hero{position:relative;height:clamp(300px,55vw,580px);overflow:hidden;}
+.proj-hero img{width:100%;height:100%;object-fit:cover;}
+.proj-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,22,40,.75) 0%,rgba(12,22,40,.2) 60%,transparent 100%);}
+.proj-hero-content{position:absolute;bottom:0;left:0;right:0;padding:clamp(28px,5vw,60px) var(--px);}
+.back-link{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:16px;transition:color .25s;}
+.back-link:hover{color:#fff;}
+.proj-hero-content h1{font-family:var(--serif);font-size:clamp(2rem,5vw,3.6rem);font-weight:700;color:#fff;line-height:1.1;}
+.proj-body{max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,80px) var(--px);}
+.proj-desc-wrap{display:grid;grid-template-columns:2fr 1fr;gap:clamp(40px,6vw,80px);margin-bottom:clamp(48px,7vw,80px);align-items:start;}
+.proj-desc-text p{font-size:clamp(.9rem,1.5vw,1rem);line-height:1.95;color:var(--body);margin-bottom:16px;}
+.proj-desc-text p:last-child{margin-bottom:0;}
+.proj-meta{background:var(--off-white);padding:28px;border-left:3px solid var(--amber);}
+.proj-meta-label{font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:6px;}
+.proj-meta-val{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--navy);margin-bottom:20px;}
+.proj-meta-val:last-child{margin-bottom:0;}
+.gallery-header{margin-bottom:clamp(24px,4vw,36px);}
+.gallery-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.gallery-eyebrow span:first-child{width:24px;height:2px;background:var(--amber);display:block;}
+.gallery-eyebrow span:last-child{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);}
+.gallery-title{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;color:var(--navy);}
+.masonry{columns:3;column-gap:clamp(8px,1.5vw,14px);}
+.masonry-item{break-inside:avoid;margin-bottom:clamp(8px,1.5vw,14px);overflow:hidden;}
+.masonry-item img{width:100%;display:block;transition:transform .5s cubic-bezier(.22,1,.36,1);}
+.masonry-item:hover img{transform:scale(1.02);}
+.proj-cta{background:var(--navy);padding:clamp(48px,7vw,80px) var(--px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.proj-cta h2{font-family:var(--serif);font-size:clamp(1.4rem,3vw,2rem);font-weight:700;color:#fff;}
+.btn-primary{display:inline-block;background:var(--amber);color:#fff;font-family:var(--sans);font-size:.74rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:14px 32px;transition:background .25s;white-space:nowrap;}
+.btn-primary:hover{background:var(--amber-h);}
+footer{background:var(--navy-dark);padding:clamp(40px,6vw,60px) var(--px) clamp(24px,4vw,36px);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:32px;}
+.footer-logo{font-family:var(--serif);font-size:1.25rem;font-weight:700;color:#fff;display:block;margin-bottom:10px;}
+.footer-tagline{font-size:.72rem;font-weight:300;color:rgba(255,255,255,.4);line-height:1.8;}
+.footer-nav{list-style:none;display:flex;flex-wrap:wrap;gap:8px 24px;}
+.footer-nav a{font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .25s;}
+.footer-nav a:hover{color:#fff;}
+.footer-copy{font-size:.62rem;color:rgba(255,255,255,.3);align-self:flex-end;}
+.proj-loading{padding:clamp(48px,7vw,80px) var(--px);text-align:center;color:var(--mid);font-size:.85rem;}
+@media(max-width:900px){.proj-desc-wrap{grid-template-columns:1fr;}.masonry{columns:2;}}
+@media(max-width:580px){.proj-body{padding-left:20px;padding-right:20px;}.proj-hero-content{padding-left:20px;padding-right:20px;}.proj-cta{padding-left:20px;padding-right:20px;}.masonry{columns:1;}footer{flex-direction:column;gap:24px;padding-left:20px;padding-right:20px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="./index.html" class="nav-logo">
+    <img src="./logo-dark.svg" alt="Stonebridge Builders" height="38">
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="./services.html">Services</a></li>
+    <li><a href="./projects.html" class="active">Projects</a></li>
+    <li><a href="./contact.html">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open navigation menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-drawer" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu" aria-hidden="true">
+  <img src="./logo-icon-white.svg" alt="Stonebridge Builders" class="nav-drawer-logo">
+  <a href="./services.html" class="drawer-link">Services</a>
+  <a href="./projects.html" class="drawer-link">Projects</a>
+  <a href="./contact.html" class="drawer-link">Contact</a>
+  <div class="drawer-details">
+    <span class="drawer-details-email">seantimmer&#64;thestonebridgeco&#46;com</span>
+    <span class="drawer-details-area">Pennsylvania &nbsp;&middot;&nbsp; North Carolina &nbsp;&middot;&nbsp; Illinois</span>
+    <span class="drawer-copy">&copy; 2026 Stonebridge Builders</span>
+  </div>
+</div>
+
+<div id="projRoot">
+  <div class="proj-loading">Loading project&hellip;</div>
+</div>
+
+<footer>
+  <div><img src="./logo-icon-white.svg" alt="Stonebridge Builders" style="height:40px;width:auto;display:block;margin-bottom:14px;opacity:.9;"><p class="footer-tagline">Professional general contractor.<br>Pennsylvania · North Carolina · Illinois<br>Est. 2015 · Licensed &amp; Insured.</p></div>
+  <ul class="footer-nav" role="list"><li><a href="./services.html">Services</a></li><li><a href="./projects.html">Projects</a></li><li><a href="./contact.html">Contact</a></li></ul>
+  <p class="footer-copy">&copy; 2026 Stonebridge Builders LLC</p>
+</footer>
+
+<script>
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+fetch('./data/projects.json')
+  .then(res => res.json())
+  .then(projects => {
+    const slug = new URLSearchParams(location.search).get('slug');
+    const project = projects.find(p => p.slug === slug);
+    const root = document.getElementById('projRoot');
+
+    if (!project) {
+      root.innerHTML = '<div class="proj-loading">Project not found. <a href="./projects.html" style="color:var(--amber);">View all projects &rarr;</a></div>';
+      return;
+    }
+
+    document.title = project.title + ' — Stonebridge Builders';
+
+    root.innerHTML = `
+      <div class="proj-hero">
+        <img src="${escapeHtml(project.heroImage)}" alt="${escapeHtml(project.title)}" fetchpriority="high">
+        <div class="proj-hero-overlay"></div>
+        <div class="proj-hero-content">
+          <a href="./projects.html" class="back-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> All Projects</a>
+          <h1>${escapeHtml(project.title)}</h1>
+        </div>
+      </div>
+
+      <div class="proj-body">
+        <div class="proj-desc-wrap">
+          <div class="proj-desc-text"><p>${escapeHtml(project.description)}</p></div>
+          <div class="proj-meta">
+            <div class="proj-meta-label">Project Type</div>
+            <div class="proj-meta-val">${escapeHtml(project.meta.type)}</div>
+            <div class="proj-meta-label">State</div>
+            <div class="proj-meta-val">${escapeHtml(project.meta.state)}</div>
+            <div class="proj-meta-label">Builder</div>
+            <div class="proj-meta-val">${escapeHtml(project.meta.builder)}</div>
+          </div>
+        </div>
+
+        <div class="gallery-header">
+          <div class="gallery-eyebrow"><span></span><span>Project Gallery</span></div>
+          <h2 class="gallery-title">Photo Gallery</h2>
+        </div>
+        <div class="masonry">
+          ${project.gallery.map(url => `<div class="masonry-item"><img src="${escapeHtml(url)}" alt="Project photo" loading="lazy" decoding="async"></div>`).join('')}
+        </div>
+      </div>
+
+      <div class="proj-cta">
+        <h2>Inspired? Let's build<br>something together.</h2>
+        <a href="./contact.html" class="btn-primary">Start Your Project</a>
+      </div>
+    `;
+
+    // Lightbox — attached after the gallery markup above is in the DOM
+    const imgs = document.querySelectorAll('.masonry-item img');
+    const lb = document.createElement('div');
+    lb.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1000;align-items:center;justify-content:center;cursor:pointer;';
+    lb.innerHTML = '<img style="max-width:94vw;max-height:92vh;object-fit:contain;border:2px solid rgba(255,255,255,.1);" alt=""><button style="position:absolute;top:20px;right:24px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;font-family:sans-serif;line-height:1;" aria-label="Close lightbox">&times;</button>';
+    document.body.appendChild(lb);
+    const lbImg = lb.querySelector('img');
+    const lbClose = lb.querySelector('button');
+    imgs.forEach(img => { img.style.cursor = 'zoom-in'; img.addEventListener('click', () => { lbImg.src = img.src.replace(/w_\d+/, 'w_1400'); lb.style.display = 'flex'; }); });
+    [lb, lbClose].forEach(el => el.addEventListener('click', e => { if (e.target === lb || e.target === lbClose) lb.style.display = 'none'; }));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.style.display = 'none'; });
+  })
+  .catch(() => {
+    document.getElementById('projRoot').innerHTML = '<div class="proj-loading">Unable to load project data.</div>';
+  });
+</script>
+<script src="./nav.js"></script>
+</body>
+</html>

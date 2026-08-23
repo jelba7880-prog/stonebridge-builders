@@ -499,49 +499,7 @@ footer {
     </div>
     <a href="./projects.html" class="view-all-btn reveal d2">View All Projects →</a>
   </div>
-  <div class="proj-grid">
-
-    <div class="proj-card reveal">
-      <img class="proj-card-img"
-        src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_800/v1774832516/gs_house-5-7_slqc2v.jpg"
-        alt="Black Stone Ridge project" loading="lazy" decoding="async">
-      <div class="proj-card-overlay">
-        <span class="proj-card-name">Black Stone Ridge</span>
-        <a href="./project-blackstone.html" class="proj-view-btn">View Project</a>
-      </div>
-    </div>
-
-    <div class="proj-card reveal d1">
-      <img class="proj-card-img"
-        src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_800/v1774833798/gs_house-2-gallery-4_cvagvt.jpg"
-        alt="Cozy Country Living project" loading="lazy" decoding="async">
-      <div class="proj-card-overlay">
-        <span class="proj-card-name">Cozy Country Living</span>
-        <a href="./project-country.html" class="proj-view-btn">View Project</a>
-      </div>
-    </div>
-
-    <div class="proj-card reveal d2">
-      <img class="proj-card-img"
-        src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_800/v1774834000/gs_house-1-51-d_tyoua0.jpg"
-        alt="A Rustic Masterpiece project" loading="lazy" decoding="async">
-      <div class="proj-card-overlay">
-        <span class="proj-card-name">A Rustic Masterpiece</span>
-        <a href="./project-rustic.html" class="proj-view-btn">View Project</a>
-      </div>
-    </div>
-
-    <div class="proj-card reveal d3">
-      <img class="proj-card-img"
-        src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_800/v1774835557/gs_house-3-gallery-2_bdhfuz.jpg"
-        alt="Lakeside Getaway project" loading="lazy" decoding="async">
-      <div class="proj-card-overlay">
-        <span class="proj-card-name">Lakeside Getaway</span>
-        <a href="./project-lakeside.html" class="proj-view-btn">View Project</a>
-      </div>
-    </div>
-
-  </div>
+  <div class="proj-grid" id="recentProjGrid"></div>
 </section>
 
 <!-- ══ REVIEWS ══ -->
@@ -756,7 +714,47 @@ if ('IntersectionObserver' in window) {
   });
 }
 
+/* ── Recent Projects (from data/projects.json) ── */
+(function () {
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  var delayClasses = ['', 'd1', 'd2', 'd3'];
+  fetch('./data/projects.json')
+    .then(function (res) { return res.json(); })
+    .then(function (projects) {
+      var grid = document.getElementById('recentProjGrid');
+      var featured = projects.slice(0, 4);
+      grid.innerHTML = featured.map(function (p, i) {
+        return '' +
+          '<div class="proj-card reveal ' + (delayClasses[i] || '') + '">' +
+            '<img class="proj-card-img" src="' + escapeHtml(p.heroImage.replace(/w_\d+/, 'w_800')) + '" alt="' + escapeHtml(p.title) + ' project" loading="lazy" decoding="async">' +
+            '<div class="proj-card-overlay">' +
+              '<span class="proj-card-name">' + escapeHtml(p.title) + '</span>' +
+              '<a href="./project.html?slug=' + encodeURIComponent(p.slug) + '" class="proj-view-btn">View Project</a>' +
+            '</div>' +
+          '</div>';
+      }).join('');
+      if ('IntersectionObserver' in window && typeof observer !== 'undefined') {
+        grid.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
+      } else {
+        grid.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('visible'); });
+      }
+    });
+}());
+
 /* ── Smooth scroll for in-page anchor links ── */
 document.querySelectorAll('a[href^="#"]').forEach(function (a) {
   a.addEventListener('click', function (e) {
-    var target = document.querySelector(a.getAttribute('h
+    var target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>
