@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Admin — Stonebridge Builders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/nav.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:16px;}
+body{background:var(--off-white);color:var(--text);font-family:var(--sans);line-height:1.6;min-height:100vh;}
+a{color:var(--amber);}
+h1,h2{font-family:var(--serif);color:var(--navy);}
+
+.admin-header{background:var(--navy);padding:24px clamp(20px,5vw,48px);}
+.admin-header h1{color:#fff;font-size:1.4rem;}
+.admin-header a{color:rgba(255,255,255,.55);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;}
+
+.admin-wrap{max-width:720px;margin:0 auto;padding:clamp(32px,6vw,64px) 20px;}
+
+/* ── Login ── */
+.login-card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:clamp(28px,5vw,44px);max-width:400px;margin:60px auto 0;}
+.login-card h2{font-size:1.3rem;margin-bottom:8px;}
+.login-card p{color:var(--mid);font-size:.85rem;margin-bottom:24px;}
+
+label{display:block;font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mid);margin-bottom:6px;margin-top:16px;}
+label:first-of-type{margin-top:0;}
+input[type=text],input[type=password],textarea,select{
+  width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:4px;
+  font-family:var(--sans);font-size:.92rem;color:var(--text);background:#fff;
+}
+input[type=file]{width:100%;padding:9px 0;font-size:.85rem;}
+textarea{resize:vertical;min-height:100px;}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--amber);outline-offset:1px;}
+
+.btn{
+  display:inline-block;background:var(--amber);color:#fff;border:none;
+  font-family:var(--sans);font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:13px 28px;border-radius:4px;cursor:pointer;transition:background .2s;margin-top:20px;
+}
+.btn:hover{background:var(--amber-h);}
+.btn:disabled{opacity:.55;cursor:not-allowed;}
+.btn-secondary{background:var(--navy);}
+.btn-secondary:hover{background:var(--navy-light);}
+
+.msg{margin-top:16px;padding:12px 14px;border-radius:4px;font-size:.85rem;display:none;}
+.msg.show{display:block;}
+.msg-error{background:#fdecec;color:#a33;border:1px solid #f0c4c4;}
+.msg-success{background:#e9f6ee;color:#2a7a45;border:1px solid #bfe4cc;}
+.msg-info{background:#eef3f8;color:var(--navy);border:1px solid #cfdcea;}
+
+/* ── Panel ── */
+.panel{display:none;}
+.panel.show{display:block;}
+.tabs{display:flex;gap:8px;margin-bottom:28px;border-bottom:1px solid var(--border);}
+.tab-btn{
+  background:none;border:none;padding:12px 18px;font-family:var(--sans);
+  font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--mid);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;
+}
+.tab-btn.active{color:var(--navy);border-color:var(--amber);}
+.tab-pane{display:none;background:#fff;border:1px solid var(--border);border-radius:6px;padding:clamp(20px,4vw,32px);}
+.tab-pane.active{display:block;}
+
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:520px){.field-row{grid-template-columns:1fr;}}
+
+.upload-progress{font-size:.78rem;color:var(--mid);margin-top:8px;}
+.result-link{display:inline-block;margin-top:10px;font-size:.85rem;font-weight:600;}
+</style>
+</head>
+<body>
+
+<div class="admin-header">
+  <h1>Stonebridge Admin</h1>
+</div>
+
+<div class="admin-wrap">
+
+  <!-- ── LOGIN ── -->
+  <div class="login-card" id="loginCard">
+    <h2>Sign in</h2>
+    <p>Enter the shared admin password to manage project photos.</p>
+    <form id="loginForm">
+      <label for="pw">Password</label>
+      <input type="password" id="pw" name="password" autocomplete="current-password" required>
+      <button type="submit" class="btn" id="loginBtn">Sign In</button>
+      <div class="msg msg-error" id="loginMsg"></div>
+    </form>
+  </div>
+
+  <!-- ── ADMIN PANEL ── -->
+  <div class="panel" id="panel">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="addPhotos">Add Photos</button>
+      <button class="tab-btn" data-tab="newProject">New Project</button>
+    </div>
+
+    <!-- Add Photos to existing project -->
+    <div class="tab-pane active" id="pane-addPhotos">
+      <h2 style="font-size:1.1rem;margin-bottom:18px;">Add Photos to a Project</h2>
+      <form id="addPhotosForm">
+        <label for="projectSelect">Project</label>
+        <select id="projectSelect" required></select>
+
+        <label for="photosInput">Photos</label>
+        <input type="file" id="photosInput" accept="image/*" multiple required>
+
+        <button type="submit" class="btn" id="addPhotosBtn">Upload &amp; Save</button>
+        <div class="upload-progress" id="addPhotosProgress"></div>
+        <div class="msg msg-error" id="addPhotosError"></div>
+        <div class="msg msg-success" id="addPhotosSuccess"></div>
+      </form>
+    </div>
+
+    <!-- Create new project -->
+    <div class="tab-pane" id="pane-newProject">
+      <h2 style="font-size:1.1rem;margin-bottom:18px;">Create a New Project</h2>
+      <form id="newProjectForm">
+        <label for="npTitle">Project Title</label>
+        <input type="text" id="npTitle" required>
+
+        <label for="npSlug">URL Slug</label>
+        <input type="text" id="npSlug" pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="e.g. maple-ridge" required>
+
+        <label for="npDescription">Description</label>
+        <textarea id="npDescription" required></textarea>
+
+        <div class="field-row">
+          <div>
+            <label for="npType">Project Type</label>
+            <input type="text" id="npType" placeholder="e.g. New Construction" required>
+          </div>
+          <div>
+            <label for="npState">State</label>
+            <input type="text" id="npState" placeholder="e.g. Pennsylvania" required>
+          </div>
+        </div>
+        <label for="npBuilder">Builder</label>
+        <input type="text" id="npBuilder" value="Stonebridge Builders LLC" required>
+
+        <label for="npHero">Hero Photo</label>
+        <input type="file" id="npHero" accept="image/*" required>
+
+        <label for="npGallery">Gallery Photos</label>
+        <input type="file" id="npGallery" accept="image/*" multiple required>
+
+        <button type="submit" class="btn btn-secondary" id="newProjectBtn">Create Project</button>
+        <div class="upload-progress" id="newProjectProgress"></div>
+        <div class="msg msg-error" id="newProjectError"></div>
+        <div class="msg msg-success" id="newProjectSuccess"></div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── Cloudinary config ──
+// Requires an UNSIGNED upload preset created in the Cloudinary dashboard
+// for cloud "dnnvpvrle" named exactly as below.
+const CLOUD_NAME = 'dnnvpvrle';
+const UPLOAD_PRESET = 'stonebridge_unsigned';
+
+function slugify(str) {
+  return str.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+function withTransform(secureUrl, transform) {
+  return secureUrl.replace('/image/upload/', `/image/upload/${transform}/`);
+}
+
+async function uploadToCloudinary(file) {
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('upload_preset', UPLOAD_PRESET);
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+    method: 'POST',
+    body: fd,
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error && data.error.message || 'Upload failed');
+  return data.secure_url;
+}
+
+function showMsg(el, text) {
+  el.textContent = text;
+  el.classList.add('show');
+}
+function hideMsg(el) {
+  el.classList.remove('show');
+  el.textContent = '';
+}
+
+// ── Auth ──
+const loginCard = document.getElementById('loginCard');
+const panel = document.getElementById('panel');
+const loginForm = document.getElementById('loginForm');
+const loginMsg = document.getElementById('loginMsg');
+const loginBtn = document.getElementById('loginBtn');
+
+function showPanel() {
+  loginCard.style.display = 'none';
+  panel.classList.add('show');
+  loadProjectOptions();
+}
+
+fetch('/.netlify/functions/admin-auth', { credentials: 'same-origin' })
+  .then((res) => res.json())
+  .then((data) => { if (data.authenticated) showPanel(); })
+  .catch(() => {});
+
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideMsg(loginMsg);
+  loginBtn.disabled = true;
+  try {
+    const res = await fetch('/.netlify/functions/admin-auth', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: document.getElementById('pw').value }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Sign in failed');
+    showPanel();
+  } catch (err) {
+    showMsg(loginMsg, err.message);
+  } finally {
+    loginBtn.disabled = false;
+  }
+});
+
+// ── Tabs ──
+document.querySelectorAll('.tab-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach((p) => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('pane-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ── Project dropdown ──
+function loadProjectOptions() {
+  fetch('/data/projects.json')
+    .then((res) => res.json())
+    .then((projects) => {
+      const select = document.getElementById('projectSelect');
+      select.innerHTML = projects.map((p) => `<option value="${p.slug}">${p.title}</option>`).join('');
+    });
+}
+
+// ── Add photos to existing project ──
+const addPhotosForm = document.getElementById('addPhotosForm');
+const addPhotosBtn = document.getElementById('addPhotosBtn');
+const addPhotosProgress = document.getElementById('addPhotosProgress');
+const addPhotosError = document.getElementById('addPhotosError');
+const addPhotosSuccess = document.getElementById('addPhotosSuccess');
+
+addPhotosForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideMsg(addPhotosError);
+  hideMsg(addPhotosSuccess);
+  addPhotosBtn.disabled = true;
+
+  const slug = document.getElementById('projectSelect').value;
+  const files = Array.from(document.getElementById('photosInput').files);
+
+  try {
+    const urls = [];
+    for (let i = 0; i < files.length; i++) {
+      addPhotosProgress.textContent = `Uploading photo ${i + 1} of ${files.length}…`;
+      const secureUrl = await uploadToCloudinary(files[i]);
+      urls.push(withTransform(secureUrl, 'f_auto,q_auto,w_1200'));
+    }
+    addPhotosProgress.textContent = 'Saving to site…';
+
+    const res = await fetch('/.netlify/functions/admin-save', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'addPhotos', slug, photos: urls }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Save failed');
+
+    addPhotosProgress.textContent = '';
+    showMsg(addPhotosSuccess, `${urls.length} photo(s) added. The site will redeploy automatically — changes appear in a minute or two.`);
+    addPhotosForm.reset();
+  } catch (err) {
+    addPhotosProgress.textContent = '';
+    showMsg(addPhotosError, err.message);
+  } finally {
+    addPhotosBtn.disabled = false;
+  }
+});
+
+// ── Create new project ──
+const npTitle = document.getElementById('npTitle');
+const npSlug = document.getElementById('npSlug');
+let slugEdited = false;
+npSlug.addEventListener('input', () => { slugEdited = true; });
+npTitle.addEventListener('input', () => { if (!slugEdited) npSlug.value = slugify(npTitle.value); });
+
+const newProjectForm = document.getElementById('newProjectForm');
+const newProjectBtn = document.getElementById('newProjectBtn');
+const newProjectProgress = document.getElementById('newProjectProgress');
+const newProjectError = document.getElementById('newProjectError');
+const newProjectSuccess = document.getElementById('newProjectSuccess');
+
+newProjectForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideMsg(newProjectError);
+  hideMsg(newProjectSuccess);
+  newProjectBtn.disabled = true;
+
+  const heroFile = document.getElementById('npHero').files[0];
+  const galleryFiles = Array.from(document.getElementById('npGallery').files);
+
+  try {
+    newProjectProgress.textContent = 'Uploading hero photo…';
+    const heroSecureUrl = await uploadToCloudinary(heroFile);
+    const heroImage = withTransform(heroSecureUrl, 'f_auto,q_auto,w_1600');
+
+    const gallery = [];
+    for (let i = 0; i < galleryFiles.length; i++) {
+      newProjectProgress.textContent = `Uploading gallery photo ${i + 1} of ${galleryFiles.length}…`;
+      const secureUrl = await uploadToCloudinary(galleryFiles[i]);
+      gallery.push(withTransform(secureUrl, 'f_auto,q_auto,w_1200'));
+    }
+
+    newProjectProgress.textContent = 'Saving to site…';
+    const project = {
+      slug: npSlug.value,
+      title: npTitle.value,
+      heroImage,
+      description: document.getElementById('npDescription').value,
+      meta: {
+        type: document.getElementById('npType').value,
+        state: document.getElementById('npState').value,
+        builder: document.getElementById('npBuilder').value,
+      },
+      gallery,
+    };
+
+    const res = await fetch('/.netlify/functions/admin-save', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'createProject', project }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Save failed');
+
+    newProjectProgress.textContent = '';
+    showMsg(newProjectSuccess, 'Project created! The site will redeploy automatically — it’ll be live in a minute or two.');
+    const link = document.createElement('a');
+    link.href = `/project.html?slug=${encodeURIComponent(project.slug)}`;
+    link.className = 'result-link';
+    link.target = '_blank';
+    link.textContent = 'View new project page →';
+    newProjectSuccess.after(link);
+
+    newProjectForm.reset();
+    slugEdited = false;
+    loadProjectOptions();
+  } catch (err) {
+    newProjectProgress.textContent = '';
+    showMsg(newProjectError, err.message);
+  } finally {
+    newProjectBtn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

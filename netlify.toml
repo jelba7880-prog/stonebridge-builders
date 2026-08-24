@@ -1,0 +1,35 @@
+[functions]
+  directory = "netlify/functions"
+
+# Legacy project URLs — keep working as transparent rewrites to the
+# single project.html template (old project-*.html files stay in place
+# as a fallback until these are confirmed working in production).
+[[redirects]]
+  from = "/project-blackstone"
+  to = "/project.html?slug=blackstone"
+  status = 200
+
+[[redirects]]
+  from = "/project-country"
+  to = "/project.html?slug=country"
+  status = 200
+
+[[redirects]]
+  from = "/project-lakeside"
+  to = "/project.html?slug=lakeside"
+  status = 200
+
+[[redirects]]
+  from = "/project-nautical"
+  to = "/project.html?slug=nautical"
+  status = 200
+
+[[redirects]]
+  from = "/project-rustic"
+  to = "/project.html?slug=rustic"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200

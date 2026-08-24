@@ -141,62 +141,7 @@ footer{background:var(--navy-dark);padding:clamp(40px,6vw,60px) var(--px) clamp(
     <h2 class="sec-title reveal d1">Recent &amp; Featured Work</h2>
   </div>
 
-  <div class="proj-cards-grid">
-    <!-- Project 1: Black Stone Ridge -->
-    <div class="proj-card reveal">
-      <img class="proj-card-img"
-        src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_700/v1774832516/gs_house-5-7_slqc2v.jpg"
-        alt="Black Stone Ridge" loading="lazy" decoding="async">
-      <div class="proj-card-overlay">
-        <span class="proj-card-name">Black Stone Ridge</span>
-        <a href="./project-blackstone.html" class="proj-view-btn">View Project</a>
-      </div>
-    </div>
-
-    <!-- Project 2: Cozy Country Living -->
-    <div class="proj-card reveal d1">
-      <img class="proj-card-img"
-        src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_700/v1774833798/gs_house-2-gallery-4_cvagvt.jpg"
-        alt="Cozy Country Living" loading="lazy" decoding="async">
-      <div class="proj-card-overlay">
-        <span class="proj-card-name">Cozy Country Living</span>
-        <a href="./project-country.html" class="proj-view-btn">View Project</a>
-      </div>
-    </div>
-
-    <!-- Project 3: A Rustic Masterpiece -->
-    <div class="proj-card reveal d2">
-      <img class="proj-card-img"
-        src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_700/v1774834000/gs_house-1-51-d_tyoua0.jpg"
-        alt="A Rustic Masterpiece" loading="lazy" decoding="async">
-      <div class="proj-card-overlay">
-        <span class="proj-card-name">A Rustic Masterpiece</span>
-        <a href="./project-rustic.html" class="proj-view-btn">View Project</a>
-      </div>
-    </div>
-
-    <!-- Project 4: Lakeside Getaway -->
-    <div class="proj-card reveal d3">
-      <img class="proj-card-img"
-        src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_700/v1774835557/gs_house-3-gallery-2_bdhfuz.jpg"
-        alt="Lakeside Getaway" loading="lazy" decoding="async">
-      <div class="proj-card-overlay">
-        <span class="proj-card-name">Lakeside Getaway</span>
-        <a href="./project-lakeside.html" class="proj-view-btn">View Project</a>
-      </div>
-    </div>
-
-    <!-- Project 5: A Nautical Lakehouse -->
-    <div class="proj-card reveal d4">
-      <img class="proj-card-img"
-        src="https://res.cloudinary.com/dnnvpvrle/image/upload/f_auto,q_auto,w_1200/v1774840508/62263021_2265079536874991_461225925053251584_n_1_j6k3wo.jpg"
-        alt="A Nautical Lakehouse" loading="lazy" decoding="async">
-      <div class="proj-card-overlay">
-        <span class="proj-card-name">A Nautical Lakehouse</span>
-        <a href="./project-nautical.html" class="proj-view-btn">View Project</a>
-      </div>
-    </div>
-  </div>
+  <div class="proj-cards-grid" id="projCardsGrid"></div>
 
 </section>
 
@@ -217,6 +162,26 @@ footer{background:var(--navy-dark);padding:clamp(40px,6vw,60px) var(--px) clamp(
 <script>
 const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');ro.unobserve(e.target);}}),{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+function escapeHtml(str){return String(str).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+const delayClasses=['','d1','d2','d3','d4'];
+fetch('./data/projects.json')
+  .then(res=>res.json())
+  .then(projects=>{
+    const grid=document.getElementById('projCardsGrid');
+    grid.innerHTML=projects.map((p,i)=>`
+      <div class="proj-card reveal ${delayClasses[i]||''}">
+        <img class="proj-card-img"
+          src="${escapeHtml(p.heroImage.replace(/w_\d+/,'w_700'))}"
+          alt="${escapeHtml(p.title)}" loading="lazy" decoding="async">
+        <div class="proj-card-overlay">
+          <span class="proj-card-name">${escapeHtml(p.title)}</span>
+          <a href="./project.html?slug=${encodeURIComponent(p.slug)}" class="proj-view-btn">View Project</a>
+        </div>
+      </div>
+    `).join('');
+    grid.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+  });
 </script>
 <script src="./nav.js"></script>
 </body>
